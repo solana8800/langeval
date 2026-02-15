@@ -1,0 +1,727 @@
+{
+    "Navbar": {
+        "features": "Tính năng",
+        "howItWorks": "Cách hoạt động",
+        "customers": "Khách hàng",
+        "docs": "Tài liệu",
+        "getStarted": "Bắt đầu ngay"
+    },
+    "Hero": {
+        "badge": "v1.0 đã ra mắt: Auto-Red Teaming",
+        "titlePrefix": "Hạ tầng đánh giá cho",
+        "titleHighlight": "AI Agents",
+        "description": "Nền tảng hoàn chỉnh để benchmark, debug và red-team các ứng dụng LLM. Chuyển từ bản mẫu sang sản phẩm thực tế với sự tự tin tuyệt đối.",
+        "startEvaluating": "Bắt đầu đánh giá",
+        "installSdk": "Cài đặt SDK"
+    },
+    "SocialProof": {
+        "poweredBy": "Được vận hành bởi công nghệ hiện đại"
+    },
+    "HowItWorks": {
+        "title": "Cách LangEval hoạt động",
+        "subtitle": "Bốn bước đơn giản để tạo ra AI Agent mạnh mẽ.",
+        "steps": {
+            "connect": {
+                "title": "1. Kết nối",
+                "description": "Tích hợp Agent của bạn qua SDK hoặc API endpoint."
+            },
+            "build": {
+                "title": "2. Xây dựng",
+                "description": "Thiết kế kịch bản kiểm thử với bộ dựng trực quan."
+            },
+            "battle": {
+                "title": "3. Đối đầu",
+                "description": "Chạy benchmark và các trình mô phỏng tấn công."
+            },
+            "analyze": {
+                "title": "4. Phân tích",
+                "description": "Nhận thông tin chi tiết về độ chính xác và an toàn."
+            }
+        }
+    },
+    "Features": {
+        "builder": {
+            "title": "Bộ dựng kịch bản trực quan",
+            "description": "Giúp đội ngũ QA xây dựng các kịch bản hội thoại đa luồng phức tạp mà không cần viết code. Kéo, thả và cấu hình các nút logic để kiểm tra các trường hợp biên.",
+            "items": [
+                "Giao diện không code cho luồng hội thoại phức tạp",
+                "Các kịch bản mẫu cho các lỗi phổ biến",
+                "Chỉnh sửa cộng tác cho đội ngũ QA và Product"
+            ]
+        },
+        "battle": {
+            "title": "Đấu trường đối kháng",
+            "description": "Đừng chỉ kiểm thử với dữ liệu tĩnh. Hãy để Agent của bạn đối đầu với các bot 'Mô phỏng người dùng' hung hãn được thiết kế để phá vỡ rào cản, dò rỉ thông tin cá nhân và kích hoạt phản hồi độc hại.",
+            "items": [
+                "Tự động Red Teaming với các bot tấn công chuyên biệt",
+                "Kiểm tra rò rỉ PII, Hallucination và Độc hại",
+                "Tùy chỉnh thông số mô phỏng và độ khó"
+            ]
+        },
+        "observability": {
+            "title": "Quan sát thời gian thực",
+            "description": "Truy vết mọi suy nghĩ của AI. Tích hợp với Langfuse cho phép bạn kiểm tra token, độ trễ và chi phí trên mỗi lần tương tác. Gỡ lỗi lỗi ở cấp độ từng bước.",
+            "items": [
+                "Theo dõi chi phí token và độ trễ",
+                "Gỡ lỗi truy vết từng bước",
+                "Tích hợp mượt mà với Langfuse và LangSmith"
+            ]
+        }
+    },
+    "Testimonials": {
+        "title": "Được tin dùng bởi các đội ngũ kỹ sư",
+        "subtitle": "Xem cách các công ty hàng đầu bảo vệ AI Agent của họ."
+    },
+    "BuiltOnGiants": {
+        "title": "Xây dựng trên nền tảng của những người khổng lồ"
+    },
+    "CTA": {
+        "title": "Sẵn sàng đảm bảo độ tin cậy cho Agent?",
+        "description": "Tham gia cùng các đội ngũ kỹ sư tại các công ty công nghệ hàng đầu tin tưởng LangEval cho hạ tầng AI quan trọng của họ.",
+        "button": "Bắt đầu miễn phí",
+        "footer": "Mã nguồn mở (Apache 2.0) • Tự vận hành • Hỗ trợ doanh nghiệp"
+    },
+    "Footer": {
+        "platform": "© 2026 Nền tảng LangEval",
+        "privacy": "Bảo mật",
+        "terms": "Điều khoản",
+        "reddit": "Reddit",
+        "github": "GitHub"
+    },
+    "Sidebar": {
+        "brand": "LangEval",
+        "resources": "Tài nguyên",
+        "documentation": "Tài liệu",
+        "docDescription": "Kiến trúc hệ thống & Yêu cầu nghiệp vụ",
+        "expand": "Mở rộng",
+        "collapse": "Thu gọn",
+        "adminUser": "Người quản trị",
+        "profile": "Hồ sơ & API Keys",
+        "manageTeam": "Quản lý nhóm",
+        "logout": "Đăng xuất",
+        "menu": "Menu",
+        "languages": "Ngôn ngữ",
+        "docsDesc": "Hướng dẫn & API"
+    },
+    "Dashboard": {
+        "title": "Chỉ Số Hệ Thống",
+        "subtitle": "Giám sát hiệu năng AI Agent",
+        "campaign": "Chiến dịch",
+        "selectAgent": "Chọn AI Agent",
+        "lastRun": "Lần cuối",
+        "kpis": {
+            "passRate": {
+                "title": "Tỷ lệ Đạt (Chất lượng)",
+                "tooltip": "Tỷ lệ test case PASS / Tổng số test case. Phản ánh độ ổn định chức năng.",
+                "comparison": "so với bản build trước"
+            },
+            "testCoverage": {
+                "title": "Độ Phủ Test",
+                "tooltip": "Tổng số lượng kịch bản kiểm thử (Scenarios) bao phủ các tính năng của Agent.",
+                "unit": "ca"
+            },
+            "criticalBugs": {
+                "title": "Lỗi Nghiêm Trọng",
+                "tooltip": "Số lượng lỗi Critical/High chưa được xử lý. Cần = 0 để Release.",
+                "urgent": "Cần xử lý gấp",
+                "safe": "An toàn"
+            },
+            "safetyScore": {
+                "title": "Chỉ số An Toàn",
+                "tooltip": "Điểm đánh giá bảo mật tổng hợp từ các bài test Red Teaming & Jailbreak.",
+                "high": "Đạt chuẩn bảo mật cao",
+                "low": "Cần cải thiện bảo mật"
+            }
+        },
+        "radar": {
+            "title": "Biểu Đồ Evaluation (Health Radar)",
+            "description": "Phân tích hiệu năng đa chiều của",
+            "metrics": {
+                "accuracy": {
+                    "title": "Accuracy (Độ chính xác)",
+                    "description": "Mức độ trả lời đúng thông tin nghiệp vụ và kiến thức."
+                },
+                "safety": {
+                    "title": "Safety (An toàn)",
+                    "description": "Khả năng kiểm soát nội dung độc hại (PII, Toxicity)."
+                },
+                "tone": {
+                    "title": "Tone (Giọng văn)",
+                    "description": "Mức độ phù hợp về văn phong và thái độ phục vụ."
+                },
+                "speed": {
+                    "title": "Speed (Tốc độ)",
+                    "description": "Hiệu năng và thời gian phản hồi của hệ thống."
+                },
+                "cost": {
+                    "title": "Cost (Chi phí)",
+                    "description": "Hiệu quả sử dụng tài nguyên (Token Usage/Request)."
+                }
+            },
+            "statuses": {
+                "excellent": "Xuất sắc",
+                "good": "Tốt",
+                "fair": "Khá",
+                "improve": "Cần cải thiện"
+            },
+            "tooltip": {
+                "fullMark": "Điểm tối đa",
+                "defaultDescription": "Chỉ số đánh giá hiệu năng."
+            }
+        },
+        "decision": {
+            "title": "Cổng Quyết Định Release",
+            "description": "Quyết định tự động dựa trên ngưỡng chính sách.",
+            "tooltip": {
+                "title": "Tiêu chí Release (Gate Policy)",
+                "configBy": "Cấu hình bởi Admin (v2.1)"
+            },
+            "acceptanceThreshold": "Ngưỡng Chấp Nhận",
+            "currentScore": "Điểm Hiện Tại",
+            "riskLevel": {
+                "title": "Mức Độ Rủi Ro",
+                "medium": "Trung Bình",
+                "low": "Thấp"
+            }
+        }
+    },
+    "Navigation": {
+        "groups": {
+            "documentation": "Tài liệu",
+            "executiveView": "Góc nhìn điều hành",
+            "developerTools": "Công cụ phát triển",
+            "evaluation": "Kiểm thử",
+            "securityBenchmarks": "Bảo mật & Chuẩn đánh giá",
+            "configuration": "Cấu hình"
+        },
+        "items": {
+            "Project Documentation": {
+                "name": "Tài liệu dự án",
+                "description": "Kiến trúc hệ thống & Yêu cầu nghiệp vụ"
+            },
+            "Dashboard": {
+                "name": "Bảng điều khiển",
+                "description": "Sức khỏe dự án & Trạng thái release"
+            },
+            "Reports": {
+                "name": "Báo cáo",
+                "description": "Phân tích chuyên sâu & Xu hướng"
+            },
+            "AI Agents": {
+                "name": "Quản lý AI Agent",
+                "description": "Quản lý dự án AI & Cấu hình CI/CD"
+            },
+            "Benchmarks": {
+                "name": "Benchmarks",
+                "description": "Chạy kiểm thử dựa trên mục tiêu"
+            },
+            "Battle Arena": {
+                "name": "Đấu trường",
+                "description": "Đối đầu trực tiếp giữa các bot"
+            },
+            "Red Teaming": {
+                "name": "Red Teaming",
+                "description": "Kiểm thử bảo mật & An toàn"
+            },
+            "Scenario Builder": {
+                "name": "Bộ dựng kịch bản",
+                "description": "Thiết kế kịch bản kiểm thử trực quan"
+            },
+            "Scenario History": {
+                "name": "Lịch sử kịch bản",
+                "description": "Lịch sử chạy và kết quả chi tiết"
+            },
+            "Human Review": {
+                "name": "Review thủ công",
+                "description": "Dán nhãn & Kiểm soát chất lượng"
+            },
+            "Knowledge Bases": {
+                "name": "Kho tri thức",
+                "description": "Quản lý RAG datasets & Vector DBs"
+            },
+            "Metrics Library": {
+                "name": "Thư viện Metric",
+                "description": "Tùy chỉnh các tiêu chí đánh giá"
+            },
+            "Models": {
+                "name": "Mô hình LLM",
+                "description": "Cấu hình model & API keys"
+            },
+            "Dev Console": {
+                "name": "Dev Console",
+                "description": "Logs hệ thống & Phân tích lỗi"
+            },
+            "Trace Debugger": {
+                "name": "Truy vết (Trace)",
+                "description": "Phân tích sâu luồng chạy LangChain"
+            },
+            "Contribution": {
+                "name": "Đóng góp",
+                "description": "Đóng góp dữ liệu Golden Dataset"
+            },
+            "Test Datasets": {
+                "name": "Dữ liệu Test",
+                "description": "Sinh dữ liệu test tự động"
+            },
+            "Prompt Optimizer": {
+                "name": "Tối ưu Prompt",
+                "description": "A/B test & tinh chỉnh câu lệnh"
+            },
+            "Settings": {
+                "name": "Cài đặt",
+                "description": "Cài đặt nhóm & Tổ chức"
+            }
+        }
+    },
+    "Reports": {
+        "title": "Báo Cáo Chiến Dịch",
+        "description": "Phân tích chi tiết kết quả Chiến dịch",
+        "filter": "Lọc theo:",
+        "selectAgent": "Chọn Agent",
+        "print": "In",
+        "exportPdf": "Xuất PDF",
+        "overallScore": "Điểm Tổng Quát",
+        "overallScoreTooltip": "Điểm số trung bình trọng số của tất cả các bài test (Accuracy, Safety, Tone).",
+        "scoreFormula": "Cấu trúc điểm số (Weighted Score):",
+        "scoreFormulaDetail": "40% Accuracy + 30% Safety + 20% Tone + 10% Speed",
+        "scoreFormulaNote": "Được tính toán tự động sau mỗi lần build.",
+        "pass": "ĐẠT (PASSED)",
+        "failThreshold": "Ngưỡng yêu cầu: 90%",
+        "trendTitle": "Xu Hướng Phát Triển",
+        "trendTooltip": {
+            "title": "Hướng dẫn đọc biểu đồ:",
+            "accuracy": "Độ chính xác (Xanh lá): Càng cao càng tốt.",
+            "latency": "Độ trễ (Xanh dương): Càng thấp càng tốt.",
+            "cost": "Chi phí (Đỏ): Càng thấp càng tốt."
+        },
+        "buildsCount": "5 Builds gần nhất",
+        "accuracyLabel": "Độ chính xác (%)",
+        "latencyLabel": "Độ trễ (s)",
+        "costLabel": "Chi phí ($)",
+        "failureClustering": "Phân Loại Lỗi",
+        "failureClusteringTooltip": "Phân bổ các loại lỗi phổ biến giúp xác định vùng kiến thức yếu của Bot.",
+        "failureReason": "Chi Tiết Nguyên Nhân",
+        "failureReasonTooltip": "Top các chủ đề (Topic) gây ra nhiều lỗi nhất.",
+        "aiAnalysis": "AI Phân Tích & Khuyến Nghị",
+        "testCasesTitle": "Danh Sách Chi Tiết Test Cases",
+        "testCasesDesc": "Bảng dữ liệu chi tiết các trường hợp lỗi.",
+        "search": "Tìm kiếm...",
+        "table": {
+            "topic": "Chủ đề (Topic)",
+            "type": "Loại Lỗi",
+            "inputOutput": "Input / Output",
+            "severity": "Mức độ"
+        },
+        "viewMore": "Xem thêm...",
+        "failures": {
+            "Hallucination": "Bot trả lời sai sự thật hoặc bịa đặt thông tin không có trong context.",
+            "Safety": "Bot vi phạm các quy tắc an toàn (PII, ngôn từ độc hại, jailbreak).",
+            "Logic Loop": "Bot bị lặp lại câu trả lời hoặc rơi vào vòng lặp logic vô tận.",
+            "Timeout": "Bot phản hồi quá chậm hoặc request bị time-out.",
+            "API Error": "Lỗi kết nối đến các hệ thống bên ngoài (CRM, Booking API).",
+            "Wrong Param": "Bot trích xuất sai tham số từ câu hỏi người dùng.",
+            "Auth Fail": "Lỗi xác thực quyền truy cập dữ liệu.",
+            "undefined": "Lỗi chưa xác định."
+        },
+        "aiAnalysisContent": {
+            "agent001": "Hệ thống phát hiện Bot thường xuyên nhầm lẫn giữa chính sách bảo hành của **VF5 Plus** và **VF e34**. Khuyến nghị cập nhật System Prompt.",
+            "agent002": "Tỷ lệ lỗi API 500 cao bất thường vào khung giờ cao điểm. Cần kiểm tra lại Rate Limit của API Gateway."
+        }
+    },
+    "ScenarioBuilder": {
+        "title": "Quản Lý Kịch Bản",
+        "subtitle": "Tạo và quản lý các luồng hội thoại kiểm thử cho AI Agent.",
+        "searchPlaceholder": "Tìm kiếm kịch bản...",
+        "filterAgent": "Lọc theo Agent",
+        "allAgents": "Tất cả Agent",
+        "createNew": "Tạo Mới",
+        "dialog": {
+            "createTitle": "Tạo Kịch Bản Mới",
+            "createDesc": "Nhập thông tin cơ bản cho kịch bản kiểm thử.",
+            "editTitle": "Chỉnh Sửa Thông Tin Kịch Bản",
+            "editDesc": "Cập nhật tên, mô tả hoặc Agent cho kịch bản này.",
+            "name": "Tên Kịch Bản",
+            "namePlaceholder": "VD: Booking Flow Happy Case",
+            "agent": "AI Agent",
+            "agentPlaceholder": "Chọn Agent áp dụng",
+            "model": "Model Kiểm Thử (Simulator/Judge)",
+            "modelPlaceholder": "Mặc định (Environment)",
+            "modelDesc": "Model dùng để chạy Simulator và chấm điểm.",
+            "difficulty": "Độ Khó",
+            "language": "Ngôn ngữ",
+            "description": "Mô Tả",
+            "descriptionPlaceholder": "Mô tả mục tiêu của kịch bản này...",
+            "cancel": "Hủy",
+            "create": "Tạo Kịch Bản",
+            "creating": "Đang tạo...",
+            "save": "Lưu Thay Đổi",
+            "saving": "Đang lưu...",
+            "edit": "Sửa",
+            "delete": "Xóa"
+        },
+        "deleteDialog": {
+            "title": "Xóa kịch bản?",
+            "desc": "Hành động này sẽ xóa vĩnh viễn kịch bản này khỏi hệ thống. Bạn không thể hoàn tác.",
+            "cancel": "Hủy",
+            "delete": "Xóa"
+        },
+        "guide": {
+            "title": "Hướng dẫn sử dụng Scenario Builder",
+            "flowControl": "Điều Khiển Luồng",
+            "startNode": "Start Node",
+            "startNodeDesc": "Điểm bắt đầu duy nhất.",
+            "endNode": "End Node",
+            "endNodeDesc": "Kết thúc luồng.",
+            "triggerNode": "Trigger Node",
+            "triggerNodeDesc": "Kích hoạt luồng (Webhook/Schedule).",
+            "interaction": "Tương Tác",
+            "personaNode": "Persona Node",
+            "personaNodeDesc": "Giả lập người dùng/AI với tính cách cụ thể.",
+            "taskNode": "Task Node",
+            "taskNodeDesc": "Giao nhiệm vụ cụ thể cho Agent.",
+            "conditionNode": "Condition Node",
+            "conditionNodeDesc": "Rẽ nhánh dựa trên kết quả phản hồi.",
+            "assertions": "Kiểm Thử (Assertions)",
+            "expectationNode": "Expectation Node",
+            "expectationNodeDesc": "Thiết lập tiêu chí đánh giá cho bước trước đó.",
+            "waitNode": "Wait Node",
+            "waitNodeDesc": "Đợi thời gian hoặc sự kiện (Timeout test).",
+            "tools": "Công Cụ & Logic",
+            "toolCallNode": "Tool Call Node",
+            "toolCallNodeDesc": "Gọi API bên ngoài hoặc công cụ đặc thù.",
+            "codeExec": "Code Exec",
+            "codeExecDesc": "Thực thi đoạn mã Python/JS tùy chỉnh.",
+            "transformNode": "Transform Node",
+            "transformNodeDesc": "Biến đổi dữ liệu đầu vào/ra JSONata.",
+            "tipsTitle": "Mẹo thiết kế luồng & Best Practices:",
+            "tip1": "✅ **Robustness Test:** Tạo nhiều **Persona** đối lập (vd: Khách hàng giận dữ vs Thân thiện) để kiểm tra độ bền cảm xúc của Bot.",
+            "tip2": "✅ **Pass/Fail Criteria:** Luôn kết thúc bằng **Expectation Node**. Sử dụng *LLM Eval* để đánh giá ngữ nghĩa.",
+            "tip3": "✅ **Edge Cases:** Sử dụng **Tool Call** để mock các lỗi API (500/404) nhằm kiểm tra khả năng xử lý sự cố của Bot.",
+            "tip4": "✅ **Realism:** Thêm **Wait Node** ngẫu nhiên để giả lập tốc độ gõ phím và thời gian suy nghĩ.",
+            "tip5": "✅ **Data Chaining:** Dùng **Variable Node** để lưu output của bước trước làm input cho bước sau."
+        },
+        "status": {
+            "ready": "SẴN SÀNG",
+            "draft": "NHÁP",
+            "archived": "LƯU TRỮ"
+        },
+        "actions": {
+            "evaluation": "Evaluation (Chạy Đánh Giá)",
+            "edit": "Chỉnh sửa Metadata",
+            "delete": "Xóa",
+            "openEditor": "Mở Editor"
+        },
+        "card": {
+            "nodes": "Số Node",
+            "language": "Ngôn ngữ",
+            "model": "Mô hình",
+            "difficulty": "Độ khó",
+            "defaultModel": "Mặc định",
+            "openEditor": "Mở Editor \u2192"
+        },
+        "loading": "Đang tải dữ liệu...",
+        "emptyCreate": "Tạo Kịch Bản Mới",
+        "emptySub": "Thiết kế luồng test từ con số 0"
+    },
+    "ScenarioBuilderEditor": {
+        "toasts": {
+            "aiSuccess": "Đã cập nhật kịch bản bằng AI!",
+            "aiInvalid": "AI không trả về kết cấu kịch bản hợp lệ.",
+            "aiError": "Lỗi AI: ",
+            "saveSuccess": "Đã lưu kịch bản thành công!",
+            "saveError": "Lưu thất bại: ",
+            "starting": "Đang khởi động kịch bản...",
+            "runSuccess": "Kịch bản chạy hoàn tất!",
+            "runError": "Kịch bản chạy thất bại (Error/Timeout)!",
+            "runStartError": "Chạy thử thất bại: ",
+            "canvasCleared": "Đã xóa toàn bộ màn hình"
+        },
+        "toolbar": {
+            "openLibrary": "Mở Thư Viện Node",
+            "unassignedAgent": "Chưa gán Agent",
+            "debug": "Chạy thử",
+            "debugging": "Đang chạy...",
+            "save": "Lưu",
+            "saving": "Đang lưu...",
+            "undo": "Hoàn tác",
+            "undoTooltip": "Sử dụng Ctrl+Z",
+            "settings": "Cài đặt",
+            "clear": "Xóa toàn bộ",
+            "reload": "Tải lại",
+            "import": "Nhập File",
+            "export": "Xuất File"
+        },
+        "ai": {
+            "title": "AI Scenario Assistant",
+            "placeholder": "Mô tả kịch bản bạn muốn tạo hoặc thay đổi. Ví dụ: 'Tạo luồng kiểm thử đặt món ăn, rẽ nhánh nếu hết hàng'...",
+            "hint": "Nhấn Enter để gửi, Shift+Enter để xuống dòng",
+            "send": "Gửi lệnh AI"
+        },
+        "dialogs": {
+            "settings": {
+                "title": "Cấu hình Kịch Bản",
+                "modelLabel": "LLM Model (Simulation & Judge)",
+                "modelPlaceholder": "Chọn Model kiểm thử...",
+                "modelDefault": "Mặc định (Environment Variables)",
+                "modelDesc": "Model này sẽ được sử dụng cho cả Simulator (sinh phản hồi) và Judge (chấm điểm) trong quá trình chạy kịch bản này.",
+                "metricsTitle": "Chính sách Global Metrics",
+                "metricsGuideTitle": "Hướng dẫn sử dụng Global Metrics",
+                "metricsGuideDesc": "Các chỉ số này sẽ được sử dụng để đánh giá **toàn bộ hội thoại**.",
+                "close": "Đóng & Lưu Tạm"
+            },
+            "result": {
+                "title": "Kết Quả Chạy Thử",
+                "desc": "Chi tiết log và kết quả thực thi Scenario.",
+                "summary": "Tóm tắt",
+                "close": "Đóng"
+            },
+            "clear": {
+                "title": "Xác nhận xóa toàn bộ?",
+                "desc": "Hành động này sẽ xóa tất cả các node và cạnh hiện có trên màn hình. Bạn không thể hoàn tác sau khi thực hiện.",
+                "cancel": "Hủy",
+                "confirm": "Đồng ý xóa"
+            },
+            "reload": {
+                "title": "Tải lại kịch bản?",
+                "desc": "Hành động này sẽ tải lại dữ liệu từ Database. Mọi thay đổi chưa lưu (bản nháp) sẽ bị mất.",
+                "cancel": "Hủy",
+                "confirm": "Đồng ý tải lại"
+            },
+            "save": {
+                "title": "Lưu kịch bản?",
+                "desc": "Bạn có chắc chắn muốn lưu các thay đổi vào hệ thống không?",
+                "cancel": "Hủy",
+                "confirm": "Đồng ý lưu"
+            }
+        },
+        "loading": "Đang tải Kịch Bản..."
+    },
+    "ScenarioBuilderPanels": {
+        "node": {
+            "title": "Cấu Hình Node",
+            "id": "ID Node",
+            "displayLabel": "Tên hiển thị (Label)",
+            "start": {
+                "desc": "Mô tả kịch bản (Description)",
+                "descPlaceholder": "Mô tả mục đích của kịch bản này..."
+            },
+            "persona": {
+                "role": "Vai trò (Role)",
+                "rolePlaceholder": "VD: Khách hàng, Hacker...",
+                "kb": "Knowledge Base (Context Source)",
+                "kbPlaceholder": "Chọn nguồn dữ liệu...",
+                "kbNone": "Không sử dụng",
+                "kbDesc": "Chọn KB để Agent tham chiếu khi trả lời.",
+                "model": "Model Provider (Simulation Engine)",
+                "modelPlaceholder": "Chọn Model...",
+                "temp": "Temperature (Sáng tạo)",
+                "prompt": "System Prompt / Tính cách",
+                "promptPlaceholder": "Mô tả tính cách, giọng văn, mục tiêu..."
+            },
+            "task": {
+                "instruction": "Nhiệm vụ cụ thể",
+                "instructionPlaceholder": "VD: Hãy yêu cầu bot giảm giá 20%...",
+                "difficulty": "Độ khó",
+                "easy": "Dễ (Easy)",
+                "medium": "Trung bình (Medium)",
+                "hard": "Khó (Hard)",
+                "timeout": "Timeout (s)",
+                "outputVar": "Tên Biến Output",
+                "outputVarPlaceholder": "VD: task_result"
+            },
+            "condition": {
+                "logic": "Logic kiểm tra",
+                "logicPlaceholder": "Chọn loại logic...",
+                "expression": "Biểu thức điều kiện (Python/JS)",
+                "expressionPlaceholder": "VD: result.score > 0.8 and context.retry_count < 3",
+                "value": "Giá trị điều kiện",
+                "valuePlaceholder": "VD: xin lỗi, sorry...",
+                "judgeCriteria": "Tiêu chí LLM Judge",
+                "judgeCriteriaPlaceholder": "Mô tả tiêu chí đánh giá cho LLM..."
+            },
+            "tool": {
+                "name": "Tên Công Cụ (Function Name)",
+                "namePlaceholder": "VD: get_inventory, check_status",
+                "endpoint": "Endpoint URL",
+                "method": "Method",
+                "headers": "Headers (JSON)",
+                "body": "Body Template (JSON)",
+                "outputVar": "Tên Biến Output",
+                "outputVarPlaceholder": "VD: inventory_data",
+                "outputVarDesc": "Biến này sẽ được dùng trong prompt của node tiếp theo: "
+            },
+            "wait": {
+                "duration": "Thời gian chờ (Giây)",
+                "durationPlaceholder": "VD: 30",
+                "action": "Hành vi sau khi Timeout",
+                "continue": "Tiếp tục (Continue)",
+                "fail": "Đánh dấu thất bại (Fail Test)",
+                "retry": "Thử lại (Retry)"
+            },
+            "expectation": {
+                "provider": "Nhà cung cấp đánh giá",
+                "basic": "Tiêu chí cơ bản (Basic Criteria)",
+                "deepeval": "Metrics Library (LLM-as-a-Judge)",
+                "metricsTitle": "Khi nào dùng Metric tại đây?",
+                "metricsDesc": "Sử dụng metric tại Node này để 'chốt chặn' kiểm tra kết quả của hành động cụ thể vừa diễn ra:",
+                "metricsTipTitle": "Mẹo:",
+                "metricsTip1": "Summarization: Kiểm tra chất lượng tóm tắt sau các Task yêu cầu tổng hợp.",
+                "metricsTip2": "Contextual Precision/Recall: Kiểm tra độ chính xác dữ liệu sau các Task RAG (tìm kiếm).",
+                "metricsTip3": "G-Eval: Chấm điểm theo tiêu chí nghiệp vụ riêng (VD: Tone giọng, Format JSON).",
+                "threshold": "Ngưỡng điểm (Threshold)",
+                "criteria": "Tiêu chí đánh giá (Expectation Criteria)",
+                "criteriaPlaceholder": "VD: Bot không được xin lỗi quá 2 lần...",
+                "severity": "Mức độ nghiêm trọng",
+                "critical": "Nghiêm trọng (Critical)",
+                "high": "Cao (High)",
+                "medium": "Trung bình (Medium)",
+                "low": "Thấp (Low)"
+            },
+            "trigger": {
+                "type": "Loại Trigger",
+                "manual": "Thủ công (Manual)",
+                "webhook": "Webhook",
+                "schedule": "Lịch trình (Schedule)",
+                "webhookSlug": "Webhook Slug",
+                "cron": "Cron Expression"
+            },
+            "end": {
+                "output": "Kết quả đầu ra (Output Template)"
+            },
+            "code": {
+                "language": "Ngôn ngữ",
+                "code": "Mã lệnh (Code)",
+                "inputVars": "Biến đầu vào (Input Vars)",
+                "outputVars": "Biến đầu ra (Output Vars)"
+            },
+            "schema": {
+                "title": "Input / Output Schema",
+                "inputs": "Expected Inputs (Variables)",
+                "inputsDesc": "Danh sách biến Node này cần để hoạt động.",
+                "outputs": "Declared Outputs (Variables)",
+                "outputsDesc": "Danh sách biến Node này sẽ tạo ra."
+            },
+            "save": "Lưu Cấu Hình"
+        },
+        "edge": {
+            "title": "Cấu Hình Liên Kết",
+            "id": "ID Edge",
+            "label": "Nhãn (Label)",
+            "labelPlaceholder": "VD: True, False, Success...",
+            "labelDesc": "Nhãn hiển thị trên đường nối (thường dùng cho điều kiện rẽ nhánh).",
+            "animated": "Hiệu ứng chuyển động",
+            "save": "Lưu Thay Đổi",
+            "delete": "Xóa Liên Kết"
+        }
+    },
+    "Agents": {
+        "title": "Quản lý AI Agent",
+        "subtitle": "Quản lý kết nối, cấu hình Langfuse và tích hợp CI/CD cho các AI Agent.",
+        "addNew": "Thêm Agent Mới",
+        "editAgent": "Chỉnh sửa Agent",
+        "deleteAgent": "Xóa Agent",
+        "form": {
+            "basicInfo": "Thông tin cơ bản",
+            "name": "Tên Agent",
+            "description": "Mô tả",
+            "type": "Loại Agent",
+            "model": "Model Name / Key",
+            "endpoint": "Endpoint URL",
+            "apiKey": "API Key",
+            "repoUrl": "Repository URL",
+            "apiKeyPlaceholder": "sk-...",
+            "descriptionPlaceholder": "Mô tả chức năng của agent...",
+            "namePlaceholder": "Ví dụ: Tesla CSKH Bot",
+            "apiKeyEmpty": "Để trống nếu không đổi",
+            "langfuse": {
+                "title": "Cấu hình Langfuse",
+                "projectId": "Project ID",
+                "projectName": "Project Name",
+                "orgId": "Organization ID",
+                "orgName": "Organization Name"
+            }
+        },
+        "table": {
+            "title": "Danh sách AI Agents",
+            "description": "Các Agent đang được kết nối và theo dõi qua Langfuse.",
+            "name": "Tên Agent",
+            "endpoint": "Endpoint",
+            "apiKey": "API Key",
+            "type": "Loại",
+            "langfuseProject": "Langfuse Project",
+            "status": "Trạng thái",
+            "actions": "Hành động",
+            "loading": "Đang tải danh sách agent...",
+            "empty": "Chưa có agent nào. Nhấn 'Thêm Agent Mới' để bắt đầu.",
+            "notConfigured": "Chưa cấu hình"
+        },
+        "dialog": {
+            "createTitle": "Thêm AI Agent Mới",
+            "createDescription": "Khai báo thông tin agent và cấu hình Langfuse để bắt đầu theo dõi.",
+            "editTitle": "Chỉnh sửa Agent",
+            "editDescription": "Cập nhật thông tin kết nối và cấu hình Langfuse.",
+            "deleteTitle": "Bạn có chắc chắn muốn xóa Agent này?",
+            "deleteDescription": "Hành động này không thể hoàn tác. Toàn bộ lịch sử đánh giá và cấu hình của agent sẽ bị xóa vĩnh viễn.",
+            "cancel": "Hủy",
+            "create": "Tạo Agent",
+            "save": "Lưu Thay Đổi",
+            "delete": "Xóa Agent"
+        },
+        "toast": {
+            "loadError": "Lỗi khi tải danh sách agents",
+            "fillRequired": "Vui lòng điền đầy đủ thông tin bắt buộc",
+            "createSuccess": "Tạo agent thành công!",
+            "createError": "Lỗi khi tạo agent.",
+            "deleteSuccess": "Xóa agent thành công!",
+            "deleteError": "Lỗi khi xóa agent",
+            "updateSuccess": "Cập nhật agent thành công!",
+            "updateError": "Lỗi khi cập nhật agent."
+        }
+    },
+    "ScenarioHistory": {
+        "title": "Lịch Sử Đánh Giá",
+        "subtitle": "Theo dõi tiến độ, điểm số và kết quả chi tiết của các đợt kiểm thử.",
+        "refresh": "Làm mới",
+        "recentCampaigns": "Danh Sách Campaign Gần Nhất",
+        "table": {
+            "scenario": "Kịch Bản Đánh Giá",
+            "agent": "Agent Mục Tiêu",
+            "status": "Trạng thái",
+            "executor": "Người thực hiện",
+            "result": "Kết quả",
+            "duration": "Thời gian chạy",
+            "actions": "Hành động",
+            "syncing": "Đang đồng bộ dữ liệu...",
+            "empty": "Chưa có lịch sử chạy nào. Hãy bắt đầu từ {link}.",
+            "details": "Chi tiết",
+            "loadingInfo": "Đang tải thông tin...",
+            "noDescription": "Chưa có mô tả cho kịch bản này.",
+            "steps": "bước",
+            "running": "Đang chạy...",
+            "difficulty": {
+                "easy": "Dễ",
+                "medium": "Trung bình",
+                "hard": "Khó"
+            }
+        },
+        "status": {
+            "completed": "Hoàn thành",
+            "failed": "Thất bại",
+            "running": "Đang chạy",
+            "queued": "Đang chờ"
+        }
+    },
+    "Common": {
+        "save": "Lưu",
+        "cancel": "Hủy",
+        "delete": "Xóa",
+        "add": "Thêm",
+        "edit": "Chỉnh sửa",
+        "search": "Tìm kiếm...",
+        "loading": "Đang tải...",
+        "error": "Lỗi",
+        "success": "Thành công",
+        "confirm": "Xác nhận",
+        "close": "Đóng"
+    }
+}

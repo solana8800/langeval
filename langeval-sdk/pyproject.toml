@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "langeval-sdk"
+version = "0.1.0"
+description = "Thin wrapper SDK for AI Agent Evaluation Platform"
+readme = "README.md"
+authors = [
+    { name = "AI Engineering Team", email = "ai-eng@evaluation.ai" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "langfuse>=2.0.0",
+    "pydantic>=2.0.0"
+]
+
+[project.optional-dependencies]
+fastapi = ["fastapi"]
+langchain = ["langchain>=0.1.0"]
+autogen = ["pyautogen>=0.2.0"]
+flask = ["flask>=2.0.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["ai_eval_sdk"]

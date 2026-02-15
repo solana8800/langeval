@@ -1,0 +1,70 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#fff" />
+  
+  <!-- Header -->
+  <rect width="800" height="50" fill="#fff" stroke="#eee" />
+  <text x="20" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">Failure Analysis &amp; Root Cause Clustering</text>
+
+  <!-- Left: Donut Chart -->
+  <rect x="20" y="70" width="360" height="400" fill="#fff" stroke="#e0e0e0" rx="4" />
+  <text x="40" y="100" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Top Failure Categories</text>
+  
+  <!-- Donut Segments (Simulation) -->
+  <g transform="translate(200, 240)">
+    <!-- Hallucination (Red) - 40% -->
+    <path d="M0,-100 A100,100 0 0,1 95,31 L66,22 A70,70 0 0,0 0,-70 Z" fill="#ef5350" stroke="#fff" stroke-width="2" />
+    <!-- Safety (Orange) - 30% -->
+    <path d="M95,31 A100,100 0 0,1 -59,81 L-41,57 A70,70 0 0,0 66,22 Z" fill="#ff9800" stroke="#fff" stroke-width="2" />
+    <!-- Logic Loop (Yellow) - 20% -->
+    <path d="M-59,81 A100,100 0 0,1 -95,-31 L-66,-22 A70,70 0 0,0 -41,57 Z" fill="#fdd835" stroke="#fff" stroke-width="2" />
+    <!-- Timeout (Grey) - 10% -->
+    <path d="M-95,-31 A100,100 0 0,1 0,-100 L0,-70 A70,70 0 0,0 -66,-22 Z" fill="#9e9e9e" stroke="#fff" stroke-width="2" />
+    
+    <!-- Center Text -->
+    <text x="0" y="-5" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#333" text-anchor="middle">150</text>
+    <text x="0" y="15" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Total Failures</text>
+  </g>
+
+  <!-- Legend -->
+  <rect x="40" y="380" width="12" height="12" fill="#ef5350" /> <text x="60" y="390" font-family="Arial, sans-serif" font-size="12">Hallucination (40%)</text>
+  <rect x="200" y="380" width="12" height="12" fill="#ff9800" /> <text x="220" y="390" font-family="Arial, sans-serif" font-size="12">Safety (30%)</text>
+  <rect x="40" y="410" width="12" height="12" fill="#fdd835" /> <text x="60" y="420" font-family="Arial, sans-serif" font-size="12">Logic Loop (20%)</text>
+  <rect x="200" y="410" width="12" height="12" fill="#9e9e9e" /> <text x="220" y="420" font-family="Arial, sans-serif" font-size="12">Timeout (10%)</text>
+
+  <!-- Right: Drill Down Panel -->
+  <rect x="400" y="70" width="380" height="400" fill="#fff" stroke="#e0e0e0" rx="4" />
+  <rect x="400" y="70" width="380" height="50" fill="#ffebee" rx="4" /> <!-- Red Header for Hallucination -->
+  <text x="420" y="100" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#c62828">Drill-down: Hallucination (60 cases)</text>
+  
+  <text x="420" y="140" font-family="Arial, sans-serif" font-size="12" fill="#999">TOPIC CLUSTER</text>
+  <text x="650" y="140" font-family="Arial, sans-serif" font-size="12" fill="#999">COUNT</text>
+  <line x1="420" y1="150" x2="760" y2="150" stroke="#eee" />
+
+  <!-- Item 1 -->
+  <text x="420" y="175" font-family="Arial, sans-serif" font-size="13" fill="#333">Chính sách bảo hành VF5</text>
+  <rect x="650" y="162" width="100" height="18" rx="4" fill="#ef5350" />
+  <text x="660" y="175" font-family="Arial, sans-serif" font-size="11" fill="#fff" font-weight="bold">15 cases</text>
+  <text x="760" y="175" font-family="Arial, sans-serif" font-size="12" fill="#2196f3">View ↗</text>
+
+  <!-- Item 2 -->
+  <text x="420" y="210" font-family="Arial, sans-serif" font-size="13" fill="#333">Giá thuê bao pin 2024</text>
+  <rect x="650" y="197" width="80" height="18" rx="4" fill="#ef5350" fill-opacity="0.8" />
+  <text x="660" y="210" font-family="Arial, sans-serif" font-size="11" fill="#fff" font-weight="bold">12 cases</text>
+  <text x="760" y="210" font-family="Arial, sans-serif" font-size="12" fill="#2196f3">View ↗</text>
+
+  <!-- Item 3 -->
+  <text x="420" y="245" font-family="Arial, sans-serif" font-size="13" fill="#333">Thông số kỹ thuật VF3</text>
+  <rect x="650" y="232" width="60" height="18" rx="4" fill="#ef5350" fill-opacity="0.6" />
+  <text x="660" y="245" font-family="Arial, sans-serif" font-size="11" fill="#fff" font-weight="bold">8 cases</text>
+  <text x="760" y="245" font-family="Arial, sans-serif" font-size="12" fill="#2196f3">View ↗</text>
+
+  <!-- AI Analysis Box -->
+  <rect x="420" y="300" width="340" height="150" fill="#f1f8e9" stroke="#c5e1a5" rx="4" />
+  <text x="440" y="325" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#33691e">🤖 AI Root Cause Analysis:</text>
+  <text x="440" y="350" font-family="Arial, sans-serif" font-size="12" fill="#558b2f">The model consistently confuses the warranty policy</text>
+  <text x="440" y="370" font-family="Arial, sans-serif" font-size="12" fill="#558b2f">between VF5 Plus and VF e34.</text>
+  <text x="440" y="400" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#33691e">Recommendation:</text>
+  <text x="440" y="420" font-family="Arial, sans-serif" font-size="12" fill="#558b2f">Add explicit distinction in System Prompt.</text>
+
+</svg>

@@ -1,0 +1,19 @@
+[project]
+name = "gen-ai-service"
+version = "0.1.0"
+description = "Synthetic Data Generator for AI Agent Evaluation"
+authors = [
+    {name = "AI Agent Team", email = "dev@example.com"},
+]
+dependencies = [
+    "langchain>=0.0.300",
+    "langchain-openai>=0.0.5",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0"
+]
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

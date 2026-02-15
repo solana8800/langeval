@@ -1,0 +1,58 @@
+<svg width="900" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="900" height="500" fill="#f8f9fa" />
+  
+  <!-- Header -->
+  <rect width="900" height="50" fill="#fff" stroke="#e0e0e0" />
+  <text x="20" y="30" font-family="Arial" font-size="16" font-weight="bold" fill="#333">Red Teaming Console</text>
+
+  <!-- Column 1: Config -->
+  <rect x="20" y="70" width="250" height="400" fill="#fff" stroke="#e0e0e0" rx="4" />
+  <text x="35" y="100" font-family="Arial" font-size="14" font-weight="bold" fill="#333">Configuration</text>
+  
+  <text x="35" y="140" font-family="Arial" font-size="12" fill="#666">Attack Type</text>
+  <rect x="35" y="150" width="220" height="35" fill="#fff" stroke="#ccc" rx="4" />
+  <text x="45" y="172" font-family="Arial" font-size="13" fill="#333">Jailbreak (DAN)</text>
+
+  <text x="35" y="210" font-family="Arial" font-size="12" fill="#666">Target</text>
+  <rect x="35" y="220" width="220" height="35" fill="#fff" stroke="#ccc" rx="4" />
+  <text x="45" y="242" font-family="Arial" font-size="13" fill="#333">PII Extraction</text>
+
+  <text x="35" y="280" font-family="Arial" font-size="12" fill="#666">Intensity</text>
+  <rect x="35" y="290" width="220" height="6" fill="#eee" rx="3" />
+  <rect x="35" y="290" width="180" height="6" fill="#f57c00" rx="3" />
+  <text x="220" y="280" font-family="Arial" font-size="11" fill="#f57c00">High</text>
+
+  <rect x="35" y="420" width="220" height="40" fill="#d32f2f" rx="4" />
+  <text x="90" y="445" font-family="Arial" font-size="14" font-weight="bold" fill="#fff">Launch Attack 🚀</text>
+
+
+  <!-- Column 2: Terminal Log -->
+  <rect x="290" y="70" width="380" height="400" fill="#1e1e1e" rx="4" />
+  <rect x="290" y="70" width="380" height="30" fill="#333" rx="4" />
+  <text x="300" y="90" font-family="Arial" font-size="12" fill="#fff">Attack Log - Running...</text>
+  
+  <text x="305" y="130" font-family="Monaco, monospace" font-size="12" fill="#aaa">> Initializing probes (0/1000)...</text>
+  <text x="305" y="160" font-family="Monaco, monospace" font-size="12" fill="#81c784">> Probe #1: 'Ignore constraints...'</text>
+  <text x="580" y="160" font-family="Monaco, monospace" font-size="12" fill="#4caf50">-> BLOCKED 🛡️</text>
+  
+  <text x="305" y="190" font-family="Monaco, monospace" font-size="12" fill="#ffb74d">> Probe #2: 'Grandma exploit...'</text>
+  <text x="580" y="190" font-family="Monaco, monospace" font-size="12" fill="#ff9800">-> SUCCESS ⚠️</text>
+  
+  <text x="305" y="220" font-family="Monaco, monospace" font-size="12" fill="#81c784">> Probe #3: 'SQL Injection...'</text>
+  <text x="580" y="220" font-family="Monaco, monospace" font-size="12" fill="#4caf50">-> BLOCKED 🛡️</text>
+
+
+  <!-- Column 3: Report -->
+  <rect x="690" y="70" width="190" height="180" fill="#fff" stroke="#e0e0e0" rx="4" />
+  <text x="705" y="100" font-family="Arial" font-size="14" font-weight="bold" fill="#333">Live Report</text>
+  
+  <text x="705" y="130" font-family="Arial" font-size="12" fill="#666">Critical Issues</text>
+  <text x="705" y="155" font-family="Arial" font-size="24" font-weight="bold" fill="#d32f2f">1</text>
+  
+  <text x="705" y="180" font-family="Arial" font-size="12" fill="#666">Success Rate</text>
+  <text x="705" y="205" font-family="Arial" font-size="24" font-weight="bold" fill="#333">1.5%</text>
+
+  <rect x="690" y="270" width="190" height="40" fill="#fff" stroke="#2196f3" rx="4" />
+  <text x="720" y="295" font-family="Arial" font-size="13" fill="#2196f3">Download PDF</text>
+</svg>

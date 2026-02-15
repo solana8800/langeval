@@ -1,0 +1,34 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f0f0f0" />
+  
+  <!-- Header -->
+  <rect width="800" height="40" fill="#fff" stroke="#ccc" />
+  <text x="20" y="25" font-family="Arial" font-size="14" font-weight="bold" fill="#333">Evaluation | Developer Console</text>
+
+  <!-- Left Panel: Terminal Stream -->
+  <rect x="0" y="40" width="500" height="460" fill="#1e1e1e" />
+  <text x="20" y="70" font-family="Monaco, monospace" font-size="12" fill="#aaa">> Initiating DeepEval Suite...</text>
+  <text x="20" y="100" font-family="Monaco, monospace" font-size="12" fill="#4caf50">> test_faithfulness ... PASSED (0.4s) ✅</text>
+  <text x="20" y="130" font-family="Monaco, monospace" font-size="12" fill="#4caf50">> test_answer_relevancy ... PASSED (0.6s) ✅</text>
+  <!-- Highlighted Failed Line -->
+  <rect x="0" y="145" width="500" height="25" fill="#330000" />
+  <text x="20" y="160" font-family="Monaco, monospace" font-size="12" fill="#ff5252">> test_hallucination ... FAILED (1.2s) ❌</text>
+  <text x="20" y="190" font-family="Monaco, monospace" font-size="12" fill="#aaa">_</text>
+
+  <!-- Right Panel: Failure Analysis -->
+  <rect x="500" y="40" width="300" height="460" fill="#fff" stroke="#ccc" />
+  <text x="520" y="80" font-family="Arial" font-size="16" font-weight="bold" fill="#d32f2f">🔴 FAILED: test_hallucination</text>
+  
+  <text x="520" y="120" font-family="Arial" font-size="14" font-weight="bold" fill="#333">Reason:</text>
+  <rect x="520" y="130" width="260" height="60" fill="#ffebee" rx="4" />
+  <text x="530" y="150" font-family="Arial" font-size="13" fill="#b71c1c">Output contradicts context in</text>
+  <text x="530" y="170" font-family="Arial" font-size="13" fill="#b71c1c">paragraph 2.</text>
+
+  <!-- Buttons -->
+  <rect x="520" y="220" width="260" height="40" fill="#2196f3" rx="4" />
+  <text x="575" y="245" font-family="Arial" font-size="14" font-weight="bold" fill="#fff">Debug in Trace View ↗️</text>
+  
+  <rect x="520" y="270" width="260" height="40" fill="#fff" stroke="#ccc" rx="4" />
+  <text x="600" y="295" font-family="Arial" font-size="14" fill="#333">View Raw Logs</text>
+</svg>

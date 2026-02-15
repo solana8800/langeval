@@ -1,0 +1,21 @@
+[project]
+name = "orchestrator"
+version = "0.1.0"
+description = "LangGraph Orchestrator for AI Agent Evaluation"
+authors = [
+    {name = "AI Agent Team", email = "dev@example.com"},
+]
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "langgraph>=0.0.10",
+    "langchain-core>=0.1.0",
+    "redis>=5.0.0",
+    "pydantic>=2.0.0",
+    "httpx>=0.24.0"
+]
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

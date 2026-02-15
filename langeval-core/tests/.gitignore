@@ -1,0 +1,7 @@
+# .gitignore for security scan reports
+
+# Trivy security scan reports
+security-reports/
+*.json
+*.txt
+*.sarif
