@@ -26,14 +26,16 @@ async def check_workspace_quota(workspace_id: str):
             if resp.status_code == 200:
                 data = resp.json()
                 plan = data.get("plan", {})
-                max_runs = plan.get("features", {}).get("max_runs_per_month", 50)
+                max_runs = plan.get("features", {}).get("max_runs_per_month", 99)
+                owner_id = data.get("owner_id")
                 
                 if max_runs == -1:
                     return # Unlimited plan
                     
                 redis = get_redis_client()
                 current_month = datetime.now().strftime('%Y-%m')
-                usage_key = f"usage:{workspace_id}:{current_month}:runs"
+                # Check quota based on owner_id (shared across workspaces)
+                usage_key = f"usage:{owner_id}:{current_month}:runs"
                 
                 # Get current usage
                 count = await redis.get(usage_key)
@@ -45,11 +47,19 @@ async def check_workspace_quota(workspace_id: str):
                         detail=f"Quota Exceeded. You have used {current_count}/{max_runs} runs. Please upgrade your plan."
                     )
                 
-                # Increment usage for this run
-                await redis.incr(usage_key)
-                # optionally set expiry to next month
-                if current_count == 0:
-                     await redis.expire(usage_key, 60*60*24*31) # 31 days
+                # --- NEW: Call Billing Service to increment usage persistently ---
+                try:
+                    inc_url = "http://billing-service:8000/api/v1/billing/usage/increment"
+                    async with httpx.AsyncClient() as client:
+                        await client.post(inc_url, json={
+                            "user_id": str(owner_id),
+                            "resource_type": "runs",
+                            "amount": 1
+                        }, timeout=5)
+                except Exception as inc_err:
+                    print(f"Warning: Failed to increment persistent usage: {inc_err}")
+                    # Fallback to local redis increment if API fails to at least keep track
+                    await redis.incr(usage_key)
                      
     except httpx.RequestError as e:
         print(f"Warning: Could not connect to Billing Service to check quota: {e}")

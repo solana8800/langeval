@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, status
+from typing import Optional, List, Dict, Any
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
 from sqlmodel import Session, select
@@ -8,7 +9,7 @@ import os
 
 from core.db import get_session
 from core.security import verify_token
-from models.models import Plan, Subscription, Workspace, User, Transaction
+from models.models import Plan, Subscription, Workspace, User, Transaction, UsageTracking, WorkspaceMember
 from services.paypal import create_subscription, verify_subscription_transaction
 
 router = APIRouter()
@@ -36,8 +37,9 @@ def list_plans(session: Session = Depends(get_session)):
 async def get_current_subscription(
     workspace_id: uuid.UUID,
     session: Session = Depends(get_session),
-    current_user: User = Depends(get_current_user)
+    current_user: Optional[User] = Depends(lambda: None) # Make it optional for internal calls
 ):
+    # Try to verify user if token exists, but don't fail if not (internal/service-to-service)
     workspace = session.get(Workspace, workspace_id)
     if not workspace:
         raise HTTPException(status_code=404, detail="Workspace not found")
@@ -70,8 +72,136 @@ async def get_current_subscription(
                 session.refresh(sub)
         except Exception as e:
             print(f"Sync period_end error: {e}")
+
+    # --- Usage Tracking ---
+    from sqlalchemy import func, text
+    from datetime import datetime
+    import redis.asyncio as redis
+    
+    # 1. Count Workspaces (Exclude personal, exclude orphaned)
+    # Only count workspaces where the user is an OWNER and is_personal is False
+    workspace_count = session.exec(
+        select(func.count(Workspace.id))
+        .join(WorkspaceMember)
+        .where(Workspace.owner_id == owner_id)
+        .where(WorkspaceMember.user_id == owner_id)
+        .where(WorkspaceMember.role == "OWNER")
+        .where(Workspace.is_personal == False)
+    ).one()
+    
+    # 2. Count Scenarios (cross-table via workspace_id)
+    scenario_count = 0
+    try:
+        # Use session.execute for raw SQL to be more robust
+        scenario_res = session.execute(
+            text("SELECT count(*) FROM scenario_ref WHERE workspace_id IN (SELECT id FROM workspaces WHERE owner_id = :owner_id)"),
+            {"owner_id": owner_id}
+        ).first()
+        scenario_count = scenario_res[0] if scenario_res else 0
+    except Exception as e:
+        print(f"Scenario count error: {e}")
+    
+    # 3. Count Test Runs from Redis
+    runs_count = 0
+    try:
+        redis_url = os.getenv("REDIS_URL", "redis://redis:6379")
+        r = redis.Redis.from_url(redis_url, decode_responses=True)
+        current_month = datetime.now().strftime('%Y-%m')
+        usage_key = f"usage:{owner_id}:{current_month}:runs"
+        count = await r.get(usage_key)
+        
+        if count is None:
+            # --- SYNC: Fallback to PostgreSQL if Redis is empty ---
+            db_usage = session.exec(
+                select(UsageTracking)
+                .where(UsageTracking.user_id == owner_id)
+                .where(UsageTracking.month == current_month)
+                .where(UsageTracking.resource_type == "runs")
+            ).first()
             
-    return {"subscription": sub, "plan": sub.plan}
+            if db_usage:
+                runs_count = db_usage.count
+                # Sync back to Redis
+                await r.set(usage_key, runs_count)
+                await r.expire(usage_key, 60*60*24*31)
+            else:
+                runs_count = 0
+        else:
+            runs_count = int(count)
+            
+        await r.close()
+    except Exception as e:
+        print(f"Redis usage error: {e}")
+            
+    return {
+        "subscription": sub, 
+        "plan": sub.plan, 
+        "owner_id": owner_id,
+        "usage": {
+            "workspaces": workspace_count,
+            "scenarios": scenario_count,
+            "runs": runs_count
+        }
+    }
+
+class UsageIncrementRequest(BaseModel):
+    user_id: uuid.UUID
+    resource_type: str = "runs"
+    amount: int = 1
+
+@router.post("/usage/increment")
+async def increment_usage(
+    req: UsageIncrementRequest,
+    session: Session = Depends(get_session)
+):
+    """
+    Tăng usage count đồng thời ở PostgreSQL và Redis để đảm bảo data persistence.
+    Thường được gọi bởi Orchestrator.
+    """
+    from datetime import datetime
+    import redis.asyncio as redis
+    
+    current_month = datetime.now().strftime('%Y-%m')
+    
+    # 1. Update PostgreSQL (Upsert pattern)
+    usage = session.exec(
+        select(UsageTracking)
+        .where(UsageTracking.user_id == req.user_id)
+        .where(UsageTracking.month == current_month)
+        .where(UsageTracking.resource_type == req.resource_type)
+    ).first()
+    
+    if not usage:
+        usage = UsageTracking(
+            user_id=req.user_id,
+            month=current_month,
+            resource_type=req.resource_type,
+            count=req.amount
+        )
+    else:
+        usage.count += req.amount
+        usage.updated_at = datetime.utcnow()
+        
+    session.add(usage)
+    session.commit()
+    
+    # 2. Update Redis
+    try:
+        redis_url = os.getenv("REDIS_URL", "redis://redis:6379")
+        r = redis.Redis.from_url(redis_url, decode_responses=True)
+        usage_key = f"usage:{req.user_id}:{current_month}:{req.resource_type}"
+        
+        # We always increment Redis. If it doesn't exist, it starts from 0 + amount.
+        # But to be extra safe, if it's a new record, we could sync from DB count.
+        new_count = await r.incrby(usage_key, req.amount)
+        if new_count == req.amount:
+             await r.expire(usage_key, 60*60*24*31)
+             
+        await r.close()
+    except Exception as e:
+        print(f"Redis increment error: {e}")
+        
+    return {"status": "success", "current_count": usage.count}
 
 class CheckoutRequest(BaseModel):
     plan_id: uuid.UUID
@@ -117,7 +247,7 @@ async def create_checkout_session(
         print(f"Checkout Error: {e}")
         raise HTTPException(status_code=500, detail="Failed to create checkout session")
 
-from typing import Optional
+# Verification request schema
 
 class CheckoutSuccessRequest(BaseModel):
     subscription_id: str

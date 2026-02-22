@@ -57,7 +57,8 @@ export function CreateWorkspaceModal({
             handleOpenChange(false);
         } catch (error) {
             console.error(error);
-            toast.error("Failed to create workspace. Please try again.");
+            const errorMessage = error instanceof Error ? error.message : "Failed to create workspace. Please try again.";
+            toast.error(errorMessage);
         } finally {
             setIsLoading(false);
         }

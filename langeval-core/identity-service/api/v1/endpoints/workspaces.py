@@ -95,6 +95,22 @@ def create_workspace(
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user)
 ):
+    # 1. Check Workspace Limits based on Subscription
+    sub = session.exec(select(Subscription).where(Subscription.user_id == current_user.id)).first()
+    if not sub:
+        raise HTTPException(status_code=400, detail="No active subscription found. Please contact support.")
+        
+    plan = session.exec(select(Plan).where(Plan.id == sub.plan_id)).first()
+    max_workspaces = plan.features.get("max_workspaces", 3) if plan and plan.features else 3
+    
+    if max_workspaces != -1: # -1 means unlimited
+        owned_workspaces = session.exec(select(Workspace).where(Workspace.owner_id == current_user.id)).all()
+        if len(owned_workspaces) >= max_workspaces:
+            raise HTTPException(
+                status_code=403, 
+                detail=f"Workspace limit reached for your Current Plan ({max_workspaces} max). Please upgrade to create more."
+            )
+
     # Create Workspace
     workspace = Workspace(
         name=workspace_in.name,

@@ -16,6 +16,14 @@ class Workspace(SQLModel, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     name: str
     owner_id: uuid.UUID = Field(foreign_key="users.id")
+    is_personal: bool = Field(default=False)
+
+class WorkspaceMember(SQLModel, table=True):
+    __tablename__ = "workspace_members"
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    workspace_id: uuid.UUID = Field(foreign_key="workspaces.id")
+    user_id: uuid.UUID = Field(foreign_key="users.id")
+    role: str = Field(default="VIEWER")
 
 class Plan(SQLModel, table=True):
     __tablename__ = "plans"
@@ -55,3 +63,12 @@ class Transaction(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
     user: User = Relationship()
+
+class UsageTracking(SQLModel, table=True):
+    __tablename__ = "usage_tracking"
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    user_id: uuid.UUID = Field(foreign_key="users.id", index=True)
+    month: str = Field(index=True) # Format: YYYY-MM
+    resource_type: str = Field(default="runs", index=True) # e.g. "runs"
+    count: int = Field(default=0)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)

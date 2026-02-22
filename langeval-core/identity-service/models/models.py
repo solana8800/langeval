@@ -151,7 +151,7 @@ class Plan(SQLModel, table=True):
                 "name": "Free",
                 "price_monthly": 0.0,
                 "price_annual": 0.0,
-                "features": {"max_workspaces": 1, "max_scenarios": 3, "max_runs_per_month": 50}
+                "features": {"max_workspaces": 3, "max_scenarios": 9, "max_runs_per_month": 99}
             }
         }
     }

@@ -148,7 +148,8 @@ export default function ScenarioListPage() {
          router.push(`/scenario-builder/${newScenario.id}`);
       } catch (e) {
          console.error("Failed to create scenario", e);
-         toast.error(t('toast.createError'));
+         const errorMessage = e instanceof Error ? e.message : t('toast.createError');
+         toast.error(errorMessage);
       } finally {
          setIsCreating(false);
       }

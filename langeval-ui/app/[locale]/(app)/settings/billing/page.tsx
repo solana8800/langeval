@@ -175,24 +175,36 @@ export default function BillingPage() {
                         <div className="text-sm font-semibold text-slate-500 mb-2 uppercase tracking-widest group-hover:text-slate-300 transition-colors">
                             {t("Pricing.max_workspaces")}
                         </div>
-                        <div className={`text-white ${currentPlan?.features?.max_workspaces < 0 ? "text-xl font-bold mt-1" : "text-4xl font-extrabold"}`}>
-                            {currentPlan?.features?.max_workspaces < 0 ? t("Pricing.unlimited") : currentPlan?.features?.max_workspaces || 1}
+                        <div className="text-white flex items-baseline gap-1">
+                            <span className="text-4xl font-extrabold">{subscription?.usage?.workspaces ?? 0}</span>
+                            <span className="text-slate-500 font-bold">/</span>
+                            <span className={currentPlan?.features?.max_workspaces < 0 ? "text-xl font-bold" : "text-xl font-bold text-slate-400"}>
+                                {currentPlan?.features?.max_workspaces < 0 ? t("Pricing.unlimited") : currentPlan?.features?.max_workspaces || 1}
+                            </span>
                         </div>
                     </div>
                     <div className="bg-[#131B2C] border border-white/5 rounded-2xl p-6 hover:border-indigo-500/30 transition-all group">
                         <div className="text-sm font-semibold text-slate-500 mb-2 uppercase tracking-widest group-hover:text-slate-300 transition-colors">
                             {t("Pricing.max_scenarios")}
                         </div>
-                        <div className={`text-white ${currentPlan?.features?.max_scenarios < 0 ? "text-xl font-bold mt-1" : "text-4xl font-extrabold"}`}>
-                            {currentPlan?.features?.max_scenarios < 0 ? t("Pricing.unlimited") : currentPlan?.features?.max_scenarios || 3}
+                        <div className="text-white flex items-baseline gap-1">
+                            <span className="text-4xl font-extrabold">{subscription?.usage?.scenarios ?? 0}</span>
+                            <span className="text-slate-500 font-bold">/</span>
+                            <span className={currentPlan?.features?.max_scenarios < 0 ? "text-xl font-bold" : "text-xl font-bold text-slate-400"}>
+                                {currentPlan?.features?.max_scenarios < 0 ? t("Pricing.unlimited") : currentPlan?.features?.max_scenarios || 3}
+                            </span>
                         </div>
                     </div>
                     <div className="bg-[#131B2C] border border-white/5 rounded-2xl p-6 hover:border-indigo-500/30 transition-all group">
                         <div className="text-sm font-semibold text-slate-500 mb-2 uppercase tracking-widest group-hover:text-slate-300 transition-colors">
                             {t("Pricing.monthly_test_runs")}
                         </div>
-                        <div className={`text-white tracking-tight ${currentPlan?.features?.max_runs_per_month < 0 ? "text-xl font-bold mt-1" : "text-4xl font-extrabold"}`}>
-                            {currentPlan?.features?.max_runs_per_month < 0 ? t("Pricing.unlimited") : currentPlan?.features?.max_runs_per_month || 50}
+                        <div className="text-white flex items-baseline gap-1">
+                            <span className="text-4xl font-extrabold">{subscription?.usage?.runs ?? 0}</span>
+                            <span className="text-slate-500 font-bold">/</span>
+                            <span className={currentPlan?.features?.max_runs_per_month < 0 ? "text-xl font-bold" : "text-xl font-bold text-slate-400"}>
+                                {currentPlan?.features?.max_runs_per_month < 0 ? t("Pricing.unlimited") : currentPlan?.features?.max_runs_per_month || 50}
+                            </span>
                         </div>
                     </div>
                     <div className="bg-[#131B2C] border border-white/5 rounded-2xl p-6 hover:border-indigo-500/30 transition-all group">

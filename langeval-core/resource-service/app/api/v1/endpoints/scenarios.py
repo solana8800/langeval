@@ -7,14 +7,38 @@ from app.models.domain import ScenarioRef, ScenarioUpdate, ScenarioCreate, Page
 from app.services.scenario_service import ScenarioService
 from app.api.deps import get_current_workspace
 
+import httpx
+from sqlmodel import select, func
+async def check_scenario_limit(workspace_id: uuid.UUID, session: Session):
+    try:
+        url = f"http://billing-service:8000/api/v1/billing/subscription?workspace_id={str(workspace_id)}"
+        async with httpx.AsyncClient() as client:
+            resp = await client.get(url, timeout=5)
+            if resp.status_code == 200:
+                data = resp.json()
+                plan = data.get("plan", {})
+                max_scenarios = plan.get("features", {}).get("max_scenarios", 9)
+                
+                if max_scenarios != -1:
+                    count = session.exec(select(func.count(ScenarioRef.id)).where(ScenarioRef.workspace_id == workspace_id)).one()
+                    
+                    if count >= max_scenarios:
+                        raise HTTPException(
+                            status_code=403, 
+                            detail=f"Scenario limit reached ({max_scenarios} max). Please contact the Workspace Owner to upgrade the plan."
+                        )
+    except httpx.RequestError as e:
+        print(f"Warning: Could not connect to Billing Service to check quota: {e}")
+
 router = APIRouter()
 
 @router.post("", response_model=ScenarioRef)
-def create_scenario(
+async def create_scenario(
     scenario_in: ScenarioCreate, 
     session: Session = Depends(get_session),
     workspace_id: uuid.UUID = Depends(get_current_workspace)
 ):
+    await check_scenario_limit(workspace_id, session)
     service = ScenarioService(session, workspace_id)
     try:
         return service.create_scenario(scenario_in)
