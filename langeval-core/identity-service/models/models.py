@@ -27,6 +27,10 @@ class User(SQLModel, table=True):
     # Relationships
     workspaces: List["WorkspaceMember"] = Relationship(back_populates="user")
     owned_workspaces: List["Workspace"] = Relationship(back_populates="owner")
+    subscription: Optional["Subscription"] = Relationship(
+        back_populates="user", 
+        sa_relationship_kwargs={"uselist": False}
+    )
 
     model_config = {
         "json_schema_extra": {
@@ -57,10 +61,6 @@ class Workspace(SQLModel, table=True):
     # Relationships
     owner: User = Relationship(back_populates="owned_workspaces")
     members: List["WorkspaceMember"] = Relationship(back_populates="workspace")
-    subscription: Optional["Subscription"] = Relationship(
-        back_populates="workspace", 
-        sa_relationship_kwargs={"uselist": False}
-    )
 
     model_config = {
         "json_schema_extra": {
@@ -161,7 +161,7 @@ class Subscription(SQLModel, table=True):
     __tablename__ = "subscriptions"
 
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    workspace_id: uuid.UUID = Field(foreign_key="workspaces.id", unique=True)
+    user_id: uuid.UUID = Field(foreign_key="users.id", unique=True)
     plan_id: uuid.UUID = Field(foreign_key="plans.id")
     
     status: str = Field(default="active") # active, past_due, canceled, pending
@@ -174,7 +174,7 @@ class Subscription(SQLModel, table=True):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
     # Relationships
-    workspace: Workspace = Relationship(back_populates="subscription")
+    user: User = Relationship(back_populates="subscription")
     plan: Plan = Relationship(back_populates="subscriptions")
 
     model_config = {

@@ -105,15 +105,6 @@ def create_workspace(
     session.commit()
     session.refresh(workspace)
 
-    # Assign Free Plan Subscription
-    plan = session.exec(select(Plan).where(Plan.name == "Free")).first()
-    if plan:
-        subscription = Subscription(
-            workspace_id=workspace.id,
-            plan_id=plan.id
-        )
-        session.add(subscription)
-
     # Add Creator as OWNER
     member = WorkspaceMember(
         workspace_id=workspace.id,
@@ -229,6 +220,10 @@ def create_invite(
     member = session.exec(statement).first()
     if not member or member.role not in [WorkspaceRole.OWNER, WorkspaceRole.EDITOR]:
          raise HTTPException(status_code=403, detail="Not enough permissions")
+
+    # 1.5 Prevent inviting new Owners (User-centric billing restriction)
+    if invite_in.role == WorkspaceRole.OWNER:
+        raise HTTPException(status_code=400, detail="Cannot invite new owners to external workspaces")
 
     # 2. Generate Code
     code = secrets.token_urlsafe(16)

@@ -57,18 +57,17 @@ export async function getWorkspaceSubscription(workspaceId: string) {
     return apiClient(`/billing/subscription?workspace_id=${workspaceId}`);
 }
 
-export async function createCheckoutSession(workspaceId: string, planId: string, isYearly: boolean = false) {
+export async function createCheckoutSession(planId: string, isYearly: boolean = false) {
     return apiClient("/billing/checkout", {
         method: "POST",
-        body: JSON.stringify({ workspace_id: workspaceId, plan_id: planId, is_yearly: isYearly })
+        body: JSON.stringify({ plan_id: planId, is_yearly: isYearly })
     });
 }
 
-export async function confirmCheckoutSession(workspaceId: string, subscriptionId: string, planId?: string, isYearly: boolean = false) {
+export async function confirmCheckoutSession(subscriptionId: string, planId?: string, isYearly: boolean = false) {
     return apiClient("/billing/checkout/success", {
         method: "POST",
         body: JSON.stringify({
-            workspace_id: workspaceId,
             subscription_id: subscriptionId,
             plan_id: planId,
             is_yearly: isYearly

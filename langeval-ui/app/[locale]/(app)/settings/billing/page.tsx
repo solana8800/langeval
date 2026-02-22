@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getBillingPlans, getWorkspaceSubscription, createCheckoutSession, confirmCheckoutSession, getTransactions } from "@/lib/api-client";
 import { CheckCircle2Icon, CreditCardIcon, AlertCircleIcon, ZapIcon } from "lucide-react";
+import { useWorkspace } from "@/components/providers/workspace-provider";
 
 export default function BillingPage() {
     const t = useTranslations();
@@ -21,6 +22,8 @@ export default function BillingPage() {
     const [error, setError] = useState("");
     const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
     const [isYearly, setIsYearly] = useState(false);
+    const { currentWorkspace } = useWorkspace();
+    const isOwner = currentWorkspace?.role === "OWNER";
 
     useEffect(() => {
         async function fetchData() {
@@ -37,7 +40,7 @@ export default function BillingPage() {
                 if (isSuccess === "true" && subId) {
                     try {
                         const isYearlyParam = searchParams.get("is_yearly") === "true";
-                        await confirmCheckoutSession(workspaceId, subId, planId || undefined, isYearlyParam);
+                        await confirmCheckoutSession(subId, planId || undefined, isYearlyParam);
                         // Remove query params to prevent re-triggering
                         router.replace("/settings/billing", { scroll: false });
                     } catch (e) {
@@ -61,6 +64,7 @@ export default function BillingPage() {
                 setPlans(sortedPlans);
                 setSubscription(subData);
                 setTransactions(txData || []);
+
             } catch (err: any) {
                 setError(err.message || "Failed to load billing information");
             } finally {
@@ -73,10 +77,8 @@ export default function BillingPage() {
     const handleUpgrade = async (planId: string) => {
         try {
             setCheckoutLoading(planId);
-            const workspaceId = localStorage.getItem("langeval_current_workspace_id");
-            if (!workspaceId) return;
 
-            const res = await createCheckoutSession(workspaceId, planId, isYearly);
+            const res = await createCheckoutSession(planId, isYearly);
             if (res.checkout_url) {
                 window.location.href = res.checkout_url;
             }
@@ -127,6 +129,16 @@ export default function BillingPage() {
             {error && (
                 <div className="p-4 bg-destructive/10 text-destructive rounded-xl flex items-center gap-2">
                     <AlertCircleIcon className="w-5 h-5" /> {error}
+                </div>
+            )}
+
+            {!isOwner && !loading && (
+                <div className="p-4 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-xl flex items-center gap-3">
+                    <AlertCircleIcon className="w-5 h-5 flex-shrink-0" />
+                    <div>
+                        <p className="font-semibold">{t("Pricing.viewer_notice_title") || "You do not have permission"}</p>
+                        <p className="text-sm mt-1">{t("Pricing.viewer_notice_desc") || "Only the Workspace Owner can view invoices and upgrade the subscription. All limits shown here are inherited from the Owner's plan."}</p>
+                    </div>
                 </div>
             )}
 
@@ -284,7 +296,8 @@ export default function BillingPage() {
                                         (isCurrent && plan.name === "Free") ||
                                         checkoutLoading === plan.id ||
                                         (isEnterprise && (plan.name === "Pro" || plan.name === "Free")) ||
-                                        (isPro && plan.name === "Free")
+                                        (isPro && plan.name === "Free") ||
+                                        !isOwner
                                     }
                                     onClick={() => handleUpgrade(plan.id)}
                                 >

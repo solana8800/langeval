@@ -134,7 +134,6 @@ export function InviteMemberModal({
                                     <SelectContent className="bg-[#0B0F19] border-white/10 text-slate-300">
                                         <SelectItem value="VIEWER" className="focus:bg-white/10 focus:text-white">Viewer</SelectItem>
                                         <SelectItem value="EDITOR" className="focus:bg-white/10 focus:text-white">Editor</SelectItem>
-                                        <SelectItem value="OWNER" className="focus:bg-white/10 focus:text-white">Owner</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>

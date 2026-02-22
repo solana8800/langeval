@@ -9,13 +9,13 @@ class User(SQLModel, table=True):
     __tablename__ = "users"
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     email: str = Field(index=True, unique=True)
+    subscription: Optional["Subscription"] = Relationship(back_populates="user", sa_relationship_kwargs={"uselist": False})
 
 class Workspace(SQLModel, table=True):
     __tablename__ = "workspaces"
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     name: str
     owner_id: uuid.UUID = Field(foreign_key="users.id")
-    subscription: Optional["Subscription"] = Relationship(back_populates="workspace", sa_relationship_kwargs={"uselist": False})
 
 class Plan(SQLModel, table=True):
     __tablename__ = "plans"
@@ -31,7 +31,7 @@ class Plan(SQLModel, table=True):
 class Subscription(SQLModel, table=True):
     __tablename__ = "subscriptions"
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    workspace_id: uuid.UUID = Field(foreign_key="workspaces.id", unique=True)
+    user_id: uuid.UUID = Field(foreign_key="users.id", unique=True)
     plan_id: uuid.UUID = Field(foreign_key="plans.id")
     status: str = Field(default="active")
     paypal_sub_id: Optional[str] = None
@@ -40,13 +40,13 @@ class Subscription(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     
-    workspace: Workspace = Relationship(back_populates="subscription")
+    user: User = Relationship(back_populates="subscription")
     plan: Plan = Relationship(back_populates="subscriptions")
 
 class Transaction(SQLModel, table=True):
     __tablename__ = "transactions"
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    workspace_id: uuid.UUID = Field(foreign_key="workspaces.id")
+    user_id: uuid.UUID = Field(foreign_key="users.id")
     subscription_id: Optional[uuid.UUID] = Field(default=None, foreign_key="subscriptions.id")
     amount: float
     currency: str = Field(default="USD")
@@ -54,4 +54,4 @@ class Transaction(SQLModel, table=True):
     paypal_transaction_id: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
-    workspace: Workspace = Relationship()
+    user: User = Relationship()

@@ -59,10 +59,11 @@ def login_google(
         plan = session.exec(select(Plan).where(Plan.name == "Free")).first()
         if plan:
             subscription = Subscription(
-                workspace_id=workspace.id,
+                user_id=user.id,
                 plan_id=plan.id
             )
             session.add(subscription)
+            session.commit()
 
         # 5. Add user as Owner
         member = WorkspaceMember(
