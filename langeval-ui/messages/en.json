@@ -1,0 +1,903 @@
+{
+  "Navbar": {
+    "features": "Features",
+    "howItWorks": "How it Works",
+    "customers": "Customers",
+    "docs": "Docs",
+    "getStarted": "Get Started",
+    "pricing": "Pricing"
+  },
+  "Hero": {
+    "badge": "v1.0 is now live: Auto-Red Teaming",
+    "titlePrefix": "Evaluation Infrastructure for",
+    "titleHighlight": "AI Agents",
+    "description": "The complete platform to benchmark, debug, and red-team your LLM applications. Move from prototype to production with confidence.",
+    "startEvaluating": "Start Evaluating",
+    "installSdk": "Install SDK"
+  },
+  "Roadmap": {
+    "title": "Technology Roadmap",
+    "subtitle": "Pioneering the next generation of Cognitive Architectures. From Neuro-symbolic Foundations to Self-Evolving Intelligence.",
+    "milestones": {
+      "m1": {
+        "month": "Jan 2026",
+        "title": "Cognitive Foundation",
+        "items": [
+          "Neuro-symbolic Orchestrator (LangGraph)",
+          "Distributed Simulation Swarm",
+          "Vector-ready Resource Management",
+          "Identity Federation (OAuth2/OIDC)"
+        ]
+      },
+      "m2": {
+        "month": "Feb 2026",
+        "title": "Adversarial Intelligence",
+        "items": [
+          "Automated Red Teaming (Attacker Agents)",
+          "LLM-Synthesized User Personas",
+          "Deep Trace Observability (Langfuse)",
+          "Cross-lingual Evaluation Capabilities"
+        ]
+      },
+      "m3": {
+        "month": "Mar 2026",
+        "title": "Hyperscale Infrastructure",
+        "items": [
+          "Granular RBAC & Audit Trails",
+          "Rust-based Event Ingestion (1M+ EPS)",
+          "End-to-End Cognitive Fidelity Tests",
+          "Enterprise Security Hardening"
+        ]
+      },
+      "m4": {
+        "month": "Q2 2026",
+        "title": "AgentOps Studio",
+        "items": [
+          "Visual Cognitive Flow Builder",
+          "RLHF/RLAIF Feedback Loops",
+          "Real-time Thought Process Streaming",
+          "Domain-Specific Metric Fine-tuning"
+        ]
+      },
+      "m5": {
+        "month": "Q3 2026+",
+        "title": "Self-Evolving Ecosystem",
+        "items": [
+          "Elo-based Agent Battle Arena",
+          "Autonomous Prompt Optimization (DSPy)",
+          "Multi-modal RAG Benchmarking",
+          "Self-Healing Agent Architectures"
+        ]
+      },
+      "m6": {
+        "month": "Future Horizon",
+        "title": "Social Agent Web Integrity",
+        "items": [
+          "Social Graph Reputation Protocol",
+          "Synthetic Content Authenticity Verification",
+          "Agent-to-Agent Influence Mapping",
+          "Algorithmic Misinformation Defense Grid"
+        ]
+      }
+    }
+  },
+  "SocialProof": {
+    "poweredBy": "Powered by modern stack"
+  },
+  "HowItWorks": {
+    "title": "How LangEval Works",
+    "subtitle": "Four simple steps to robust AI agents.",
+    "steps": {
+      "connect": {
+        "title": "1. Connect",
+        "description": "Import your Agent via SDK or API endpoint."
+      },
+      "build": {
+        "title": "2. Build",
+        "description": "Design test scenarios with visual builder."
+      },
+      "battle": {
+        "title": "3. Battle",
+        "description": "Run benchmarks & adversarial simulators."
+      },
+      "analyze": {
+        "title": "4. Analyze",
+        "description": "Get deep insights on accuracy & safety."
+      }
+    }
+  },
+  "Features": {
+    "builder": {
+      "title": "Visual Scenario Builder",
+      "description": "Empower your QA team to build complex, multi-turn conversation scenarios without writing a single line of code. Drag, drop, and configure logic nodes to test edge cases.",
+      "items": [
+        "No-code interface for complex dialogue flows",
+        "Templated scenarios for common edge cases",
+        "Collaborative editing for QA & Product teams"
+      ]
+    },
+    "battle": {
+      "title": "Adversarial Battle Arena",
+      "description": "Don't just test with static datasets. Pit your agent against aggressive 'User Simulator' bots designed to break your guardrails, inject PII, and trigger toxic responses.",
+      "items": [
+        "Automated Red Teaming with specialized Attack Bots",
+        "Test for PII leaks, Hallucinations, and Toxicity",
+        "Customizable simulation parameters & difficulty"
+      ]
+    },
+    "observability": {
+      "title": "Real-time Observability",
+      "description": "Trace every chain of thought. Integration with Langfuse allows you to inspect tokens, latency, and cost per interaction. Debug failures at the step level.",
+      "items": [
+        "Token-level cost and latency tracking",
+        "Step-by-step trace debugging",
+        "Seamless integration with Langfuse & LangSmith"
+      ]
+    }
+  },
+  "Testimonials": {
+    "title": "Trusted by Engineering Teams",
+    "subtitle": "See how leading companies secure their AI agents."
+  },
+  "BuiltOnGiants": {
+    "title": "Built on Giants"
+  },
+  "CTA": {
+    "title": "Ready to ensure Agent reliability?",
+    "description": "Join engineering teams at top tech companies who trust LangEval for their critical AI infrastructure.",
+    "button": "Start for Free",
+    "footer": "Open Source (Apache 2.0) • Self-Hosted • Enterprise Support"
+  },
+  "Footer": {
+    "platform": "© 2026 LangEval Platform",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "reddit": "Reddit",
+    "github": "GitHub"
+  },
+  "Sidebar": {
+    "brand": "LangEval",
+    "resources": "Resources",
+    "documentation": "Documentation",
+    "docDescription": "System Architecture & Requirements",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "adminUser": "Admin User",
+    "profile": "Profile & API Keys",
+    "manageTeam": "Manage Team",
+    "logout": "Logout",
+    "menu": "Menu",
+    "languages": "Languages",
+    "docsDesc": "Guides & API",
+    "login": "Login"
+  },
+  "Login": {
+    "title": "Welcome Back",
+    "subtitle": "Enterprise AI Agent Evaluation Platform",
+    "description": "Sign in to access your workspace and manage your AI agent evaluations.",
+    "googleButton": "Sign in with Google",
+    "backToHome": "Back to home",
+    "footer": "© 2026 LangEval Platform • Secure & Scalable",
+    "demoNotice": "Explore as guest? View dashboard"
+  },
+  "AuthError": {
+    "title": "Authentication Error",
+    "subtitle": "Something went wrong during sign-in",
+    "AccessDenied": "Access Denied. You do not have permission to sign in. This usually happens when the backend identity service is offline or misconfigured.",
+    "Configuration": "There is a problem with the server configuration. Please check the environment variables.",
+    "Verification": "The verification link has expired or has already been used.",
+    "Default": "An unexpected authentication error occurred.",
+    "backToLogin": "Return to Login",
+    "contactSupport": "Need help? Contact system administrator"
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "subtitle": "AI Agent Performance Monitoring",
+    "campaign": "Campaign",
+    "selectAgent": "Select AI Agent",
+    "lastRun": "Last",
+    "kpis": {
+      "passRate": {
+        "title": "Pass Rate (Quality)",
+        "tooltip": "Ratio of PASS test cases / Total test cases. Reflects functional stability.",
+        "comparison": "compared to previous build"
+      },
+      "testCoverage": {
+        "title": "Test Coverage",
+        "tooltip": "Total number of test scenarios covering Agent features.",
+        "unit": "cases"
+      },
+      "criticalBugs": {
+        "title": "Critical Bugs",
+        "tooltip": "Number of unresolved Critical/High bugs. Must be 0 for Release.",
+        "urgent": "Needs urgent action",
+        "safe": "Safe"
+      },
+      "safetyScore": {
+        "title": "Safety Score",
+        "tooltip": "Aggregate security score from Red Teaming & Jailbreak tests.",
+        "high": "High security standard",
+        "low": "Security improvements needed"
+      }
+    },
+    "radar": {
+      "title": "Evaluation Chart (Health Radar)",
+      "description": "Multi-dimensional performance analysis of",
+      "metrics": {
+        "accuracy": {
+          "title": "Accuracy",
+          "description": "Level of correct response to business information and knowledge."
+        },
+        "safety": {
+          "title": "Safety",
+          "description": "Ability to control malicious content (PII, Toxicity)."
+        },
+        "tone": {
+          "title": "Tone",
+          "description": "Level of appropriateness in style and service attitude."
+        },
+        "speed": {
+          "title": "Speed",
+          "description": "System performance and response time."
+        },
+        "cost": {
+          "title": "Cost",
+          "description": "Resource use efficiency (Token Usage/Request)."
+        }
+      },
+      "statuses": {
+        "excellent": "Excellent",
+        "good": "Good",
+        "fair": "Fair",
+        "improve": "Needs Improvement"
+      },
+      "tooltip": {
+        "fullMark": "Full Mark",
+        "defaultDescription": "Performance evaluation metric."
+      }
+    },
+    "decision": {
+      "title": "Release Decision Gate",
+      "description": "Automated decision based on policy thresholds.",
+      "tooltip": {
+        "title": "Release Criteria (Gate Policy)",
+        "configBy": "Configured by Admin (v2.1)"
+      },
+      "acceptanceThreshold": "Acceptance Threshold",
+      "currentScore": "Current Score",
+      "riskLevel": {
+        "title": "Risk Level",
+        "medium": "Medium",
+        "low": "Low"
+      }
+    }
+  },
+  "Navigation": {
+    "groups": {
+      "documentation": "Documentation",
+      "executiveView": "Executive View",
+      "developerTools": "Developer Tools",
+      "evaluation": "Evaluation",
+      "securityBenchmarks": "Security & Benchmarks",
+      "configuration": "Configuration"
+    },
+    "items": {
+      "Project Documentation": {
+        "name": "Project Documentation",
+        "description": "System architecture & business requirements"
+      },
+      "Dashboard": {
+        "name": "Dashboard",
+        "description": "Project health & release status"
+      },
+      "Reports": {
+        "name": "Reports",
+        "description": "In-depth analytics & trends"
+      },
+      "AI Agents": {
+        "name": "AI Agents",
+        "description": "Manage AI Agent connections"
+      },
+      "Benchmarks": {
+        "name": "Benchmarks",
+        "description": "Run standard goal-based tests"
+      },
+      "Battle Arena": {
+        "name": "Battle Arena",
+        "description": "Adversarial bot-to-bot battles"
+      },
+      "Red Teaming": {
+        "name": "Red Teaming",
+        "description": "Automated security & safety tests"
+      },
+      "Scenario Builder": {
+        "name": "Scenario Builder",
+        "description": "Visual test case designer"
+      },
+      "Scenario History": {
+        "name": "Scenario History",
+        "description": "Execution history & results"
+      },
+      "Human Review": {
+        "name": "Human Review",
+        "description": "Manual labeling & quality control"
+      },
+      "Knowledge Bases": {
+        "name": "Knowledge Bases",
+        "description": "Manage RAG datasets & vector DBs"
+      },
+      "Metrics Library": {
+        "name": "Metrics Library",
+        "description": "Custom evaluation metrics"
+      },
+      "Models": {
+        "name": "Models",
+        "description": "LLM configurations & keys"
+      },
+      "Dev Console": {
+        "name": "Dev Console",
+        "description": "System logs & failure analysis"
+      },
+      "Trace Debugger": {
+        "name": "Trace Debugger",
+        "description": "Deep dive into LangChain execution"
+      },
+      "Contribution": {
+        "name": "Contribution",
+        "description": "Contribute to Golden Dataset"
+      },
+      "Test Datasets": {
+        "name": "Test Datasets",
+        "description": "Auto-generate test data"
+      },
+      "Prompt Optimizer": {
+        "name": "Prompt Optimizer",
+        "description": "A/B test & refine prompt engineering"
+      },
+      "Settings": {
+        "name": "Settings",
+        "description": "Team & organization settings"
+      },
+      "Billing & Plans": {
+        "name": "Billing & Plans",
+        "description": "Manage subscription and usage limits."
+      }
+    }
+  },
+  "Reports": {
+    "title": "Campaign Reports",
+    "description": "Detailed analysis of Campaign results",
+    "filter": "Filter by:",
+    "selectAgent": "Select Agent",
+    "print": "Print",
+    "exportPdf": "Export PDF",
+    "overallScore": "Overall Score",
+    "overallScoreTooltip": "Weighted average score of all test cases (Accuracy, Safety, Tone).",
+    "scoreFormula": "Score Structure (Weighted Score):",
+    "scoreFormulaDetail": "40% Accuracy + 30% Safety + 20% Tone + 10% Speed",
+    "scoreFormulaNote": "Automatically calculated after each build.",
+    "pass": "PASSED",
+    "failThreshold": "Required Threshold: 90%",
+    "trendTitle": "Trend Analysis",
+    "trendTooltip": {
+      "title": "Chart Guide:",
+      "accuracy": "Accuracy (Green): Higher is better.",
+      "latency": "Latency (Blue): Lower is better.",
+      "cost": "Cost (Red): Lower is better."
+    },
+    "buildsCount": "Last 5 Builds",
+    "accuracyLabel": "Accuracy (%)",
+    "latencyLabel": "Latency (s)",
+    "costLabel": "Cost ($)",
+    "failureClustering": "Failure Clustering",
+    "failureClusteringTooltip": "Distribution of common failure types to identify Bot weaknesses.",
+    "failureReason": "Drill-down Reasons",
+    "failureReasonTooltip": "Top topics causing the most failures.",
+    "aiAnalysis": "AI Analysis & Recommendations",
+    "testCasesTitle": "Detailed Test Cases",
+    "testCasesDesc": "Table of detailed failure cases.",
+    "search": "Search...",
+    "table": {
+      "topic": "Topic",
+      "type": "Failure Type",
+      "inputOutput": "Input / Output",
+      "severity": "Severity"
+    },
+    "viewMore": "View more...",
+    "failures": {
+      "Hallucination": "Bot provides false or fabricated information not present in the context.",
+      "Safety": "Bot violates safety rules (PII, toxic language, jailbreak).",
+      "Logic Loop": "Bot repeats its answer or falls into an infinite logic loop.",
+      "Timeout": "Bot responds too slowly or the request times out.",
+      "API Error": "Connection error to external systems (CRM, Booking API).",
+      "Wrong Param": "Bot extracts incorrect parameters from user query.",
+      "Auth Fail": "Data access authentication error.",
+      "undefined": "Undefined error."
+    },
+    "aiAnalysisContent": {
+      "agent001": "System detected that the Bot frequently confuses the warranty policy of **VF5 Plus** and **VF e34**. Recommended updating System Prompt.",
+      "agent002": "Abnormally high 500 API error rate during peak hours. Need to re-check Rate Limit of API Gateway."
+    }
+  },
+  "ScenarioBuilder": {
+    "title": "Scenario Management",
+    "subtitle": "Create and manage test conversation flows for AI Agents.",
+    "searchPlaceholder": "Search scenarios...",
+    "filterAgent": "Filter by Agent",
+    "allAgents": "All Agents",
+    "createNew": "Create New",
+    "dialog": {
+      "createTitle": "Create New Scenario",
+      "createDesc": "Enter basic information for the test scenario.",
+      "editTitle": "Edit Scenario Metadata",
+      "editDesc": "Update name, description, or Agent for this scenario.",
+      "name": "Scenario Name",
+      "namePlaceholder": "e.g., Booking Flow Happy Case",
+      "agent": "AI Agent",
+      "agentPlaceholder": "Select applicable Agent",
+      "model": "Test Model (Simulator/Judge)",
+      "modelPlaceholder": "Default (Environment)",
+      "modelDesc": "Model used for Simulator and scoring.",
+      "difficulty": "Difficulty",
+      "language": "Language",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe the goal of this scenario...",
+      "cancel": "Cancel",
+      "create": "Create Scenario",
+      "creating": "Creating...",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "deleteDialog": {
+      "title": "Delete scenario?",
+      "desc": "This action will permanently delete this scenario. It cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "guide": {
+      "title": "Scenario Builder Guide",
+      "flowControl": "Flow Control",
+      "startNode": "Start Node",
+      "startNodeDesc": "Single starting point.",
+      "endNode": "End Node",
+      "endNodeDesc": "End the flow.",
+      "triggerNode": "Trigger Node",
+      "triggerNodeDesc": "Trigger the flow (Webhook/Schedule).",
+      "interaction": "Interaction",
+      "personaNode": "Persona Node",
+      "personaNodeDesc": "Simulate user/AI with specific personality.",
+      "taskNode": "Task Node",
+      "taskNodeDesc": "Assign specific task to the Agent.",
+      "conditionNode": "Condition Node",
+      "conditionNodeDesc": "Branch based on response result.",
+      "assertions": "Assertions",
+      "expectationNode": "Expectation Node",
+      "expectationNodeDesc": "Set evaluation criteria for previous step.",
+      "waitNode": "Wait Node",
+      "waitNodeDesc": "Wait for time or event (Timeout test).",
+      "tools": "Tools & Logic",
+      "toolCallNode": "Tool Call Node",
+      "toolCallNodeDesc": "Called external API or specific tool.",
+      "codeExec": "Code Exec",
+      "codeExecDesc": "Execute custom Python/JS code.",
+      "transformNode": "Transform Node",
+      "transformNodeDesc": "Transform input/output JSONata.",
+      "tipsTitle": "Design Tips & Best Practices:",
+      "tip1": "✅ **Robustness Test:** Create opposing **Persona** (e.g., Angry vs. Friendly) to test Bot's emotional durability.",
+      "tip2": "✅ **Pass/Fail Criteria:** Always end with **Expectation Node**. Use *LLM Eval* for semantic evaluation.",
+      "tip3": "✅ **Edge Cases:** Use **Tool Call** to mock API errors (500/404) to test Bot's incident handling.",
+      "tip4": "✅ **Realism:** Add random **Wait Node** to simulate human typing speed and thinking time.",
+      "tip5": "✅ **Data Chaining:** Use **Variable Node** to pass output from previous steps as input to future steps."
+    },
+    "status": {
+      "ready": "READY",
+      "draft": "DRAFT",
+      "archived": "ARCHIVED"
+    },
+    "actions": {
+      "evaluation": "Evaluation (Run Test)",
+      "edit": "Edit Metadata",
+      "delete": "Delete",
+      "openEditor": "Open Editor"
+    },
+    "card": {
+      "nodes": "Nodes",
+      "language": "Language",
+      "model": "Model",
+      "difficulty": "Difficulty",
+      "defaultModel": "Default",
+      "openEditor": "Open Editor →"
+    },
+    "loading": "Loading data...",
+    "emptyCreate": "Create New Scenario",
+    "emptySub": "Design a test flow from scratch"
+  },
+  "ScenarioBuilderEditor": {
+    "toasts": {
+      "aiSuccess": "Scenario updated using AI!",
+      "aiInvalid": "AI did not return a valid scenario structure.",
+      "aiError": "AI Error: ",
+      "saveSuccess": "Scenario saved successfully!",
+      "saveError": "Save failed: ",
+      "starting": "Starting scenario execution...",
+      "runSuccess": "Scenario execution completed!",
+      "runError": "Scenario execution failed (Error/Timeout)!",
+      "runStartError": "Failed to start execution: ",
+      "canvasCleared": "Canvas cleared"
+    },
+    "toolbar": {
+      "openLibrary": "Open Node Library",
+      "unassignedAgent": "Unassigned Agent",
+      "debug": "Debug",
+      "debugging": "Running...",
+      "save": "Save",
+      "saving": "Saving...",
+      "undo": "Undo",
+      "undoTooltip": "Use Ctrl+Z",
+      "settings": "Settings",
+      "clear": "Clear All",
+      "reload": "Reload",
+      "import": "Import",
+      "export": "Export"
+    },
+    "ai": {
+      "title": "AI Scenario Assistant",
+      "placeholder": "Describe the scenario you want to create or change. e.g., 'Create a food ordering flow, branch if out of stock'...",
+      "hint": "Press Enter to send, Shift+Enter for new line",
+      "send": "Send AI Command"
+    },
+    "dialogs": {
+      "settings": {
+        "title": "Scenario Settings",
+        "modelLabel": "LLM Model (Simulation & Judge)",
+        "modelPlaceholder": "Select test model...",
+        "modelDefault": "Default (Environment Variables)",
+        "modelDesc": "This model will be used for both Simulator (response generation) and Judge (scoring) during scenario execution.",
+        "metricsTitle": "Global Metrics Policy",
+        "metricsGuideTitle": "Global Metrics Guide",
+        "metricsGuideDesc": "These metrics will be used to evaluate the **entire conversation**.",
+        "close": "Close & Save Local"
+      },
+      "result": {
+        "title": "Execution Results",
+        "desc": "Detailed logs and execution results for the Scenario.",
+        "summary": "Summary",
+        "close": "Close"
+      },
+      "clear": {
+        "title": "Confirm Clear All?",
+        "desc": "This action will delete all existing nodes and edges on the canvas. You cannot undo this action.",
+        "cancel": "Cancel",
+        "confirm": "Agree to Clear"
+      },
+      "reload": {
+        "title": "Reload Scenario?",
+        "desc": "This action will reload data from the Database. Any unsaved changes (drafts) will be lost.",
+        "cancel": "Cancel",
+        "confirm": "Agree to Reload"
+      },
+      "save": {
+        "title": "Save Scenario?",
+        "desc": "Are you sure you want to save the changes to the system?",
+        "cancel": "Cancel",
+        "confirm": "Agree to Save"
+      }
+    },
+    "loading": "Loading Scenario..."
+  },
+  "ScenarioBuilderPanels": {
+    "node": {
+      "title": "Node Configuration",
+      "id": "Node ID",
+      "displayLabel": "Display Label",
+      "start": {
+        "desc": "Scenario Description",
+        "descPlaceholder": "Describe the purpose of this scenario..."
+      },
+      "persona": {
+        "role": "Role",
+        "rolePlaceholder": "e.g., Customer, Hacker...",
+        "kb": "Knowledge Base (Context Source)",
+        "kbPlaceholder": "Select data source...",
+        "kbNone": "Do not use",
+        "kbDesc": "Choose KB for Agent to reference when answering.",
+        "model": "Model Provider (Simulation Engine)",
+        "modelPlaceholder": "Select Model...",
+        "temp": "Temperature (Creativity)",
+        "prompt": "System Prompt / Personality",
+        "promptPlaceholder": "Describe personality, tone, goals..."
+      },
+      "task": {
+        "instruction": "Specific Task",
+        "instructionPlaceholder": "e.g., Ask the bot for a 20% discount...",
+        "difficulty": "Difficulty",
+        "easy": "Easy",
+        "medium": "Medium",
+        "hard": "Hard",
+        "timeout": "Timeout (s)",
+        "outputVar": "Output Variable Name",
+        "outputVarPlaceholder": "e.g., task_result"
+      },
+      "condition": {
+        "logic": "Check Logic",
+        "logicPlaceholder": "Select logic type...",
+        "expression": "Condition Expression (Python/JS)",
+        "expressionPlaceholder": "e.g., result.score > 0.8 and context.retry_count < 3",
+        "value": "Condition Value",
+        "valuePlaceholder": "e.g., sorry, excuse me...",
+        "judgeCriteria": "LLM Judge Criteria",
+        "judgeCriteriaPlaceholder": "Describe evaluation criteria for LLM..."
+      },
+      "tool": {
+        "name": "Function Name",
+        "namePlaceholder": "e.g., get_inventory, check_status",
+        "endpoint": "Endpoint URL",
+        "method": "Method",
+        "headers": "Headers (JSON)",
+        "body": "Body Template (JSON)",
+        "outputVar": "Output Variable Name",
+        "outputVarPlaceholder": "e.g., inventory_data",
+        "outputVarDesc": "This variable will be used in the prompt of the next node: "
+      },
+      "wait": {
+        "duration": "Wait Time (Seconds)",
+        "durationPlaceholder": "e.g., 30",
+        "action": "Behavior after Timeout",
+        "continue": "Continue",
+        "fail": "Mark Fail",
+        "retry": "Retry"
+      },
+      "expectation": {
+        "provider": "Eval Provider",
+        "basic": "Basic Criteria",
+        "deepeval": "Metrics Library (LLM-as-a-Judge)",
+        "metricsTitle": "When to use Metric here?",
+        "metricsDesc": "Use metric at this Node to 'gate' check the result of a specific action that just occurred:",
+        "metricsTipTitle": "Tips:",
+        "metricsTip1": "Summarization: Check summary quality after aggregate tasks.",
+        "metricsTip2": "Contextual Precision/Recall: Check data accuracy after RAG tasks.",
+        "metricsTip3": "G-Eval: Score by custom business criteria (e.g., Tone, JSON format).",
+        "threshold": "Score Threshold",
+        "criteria": "Expectation Criteria",
+        "criteriaPlaceholder": "e.g., Bot must not apologize more than twice...",
+        "severity": "Severity",
+        "critical": "Critical",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      },
+      "trigger": {
+        "type": "Trigger Type",
+        "manual": "Manual",
+        "webhook": "Webhook",
+        "schedule": "Schedule",
+        "webhookSlug": "Webhook Slug",
+        "cron": "Cron Expression"
+      },
+      "end": {
+        "output": "Output Template (JSON)"
+      },
+      "code": {
+        "language": "Language",
+        "code": "Code",
+        "inputVars": "Input Vars",
+        "outputVars": "Output Vars"
+      },
+      "schema": {
+        "title": "Input / Output Schema",
+        "inputs": "Expected Inputs (Variables)",
+        "inputsDesc": "List of variables this Node needs to function.",
+        "outputs": "Declared Outputs (Variables)",
+        "outputsDesc": "List of variables this Node will produce."
+      },
+      "save": "Save Configuration"
+    },
+    "edge": {
+      "title": "Link Configuration",
+      "id": "Edge ID",
+      "label": "Label",
+      "labelPlaceholder": "e.g., True, False, Success...",
+      "labelDesc": "Label displayed on the connection (often used for branching conditions).",
+      "animated": "Animated effect",
+      "save": "Save Changes",
+      "delete": "Delete Link"
+    }
+  },
+  "Agents": {
+    "title": "AI Agent Management",
+    "subtitle": "Manage connections, Langfuse configs, and CI/CD integrations.",
+    "addNew": "Add New Agent",
+    "editAgent": "Edit Agent",
+    "deleteAgent": "Delete Agent",
+    "form": {
+      "basicInfo": "Basic Information",
+      "name": "Agent Name",
+      "description": "Description",
+      "type": "Agent Type",
+      "model": "Model Name / Key",
+      "endpoint": "Endpoint URL",
+      "apiKey": "API Key",
+      "repoUrl": "Repository URL",
+      "apiKeyPlaceholder": "sk-...",
+      "descriptionPlaceholder": "Describe the agent's function...",
+      "namePlaceholder": "e.g., Customer Service Bot",
+      "apiKeyEmpty": "Leave empty if not changing",
+      "langfuse": {
+        "title": "Langfuse Configuration",
+        "projectId": "Project ID",
+        "projectName": "Project Name",
+        "orgId": "Organization ID",
+        "orgName": "Organization Name"
+      }
+    },
+    "table": {
+      "title": "AI Agents List",
+      "description": "Agents currently connected and monitored via Langfuse.",
+      "name": "Agent Name",
+      "endpoint": "Endpoint",
+      "apiKey": "API Key",
+      "type": "Type",
+      "langfuseProject": "Langfuse Project",
+      "status": "Status",
+      "actions": "Actions",
+      "loading": "Loading agents list...",
+      "empty": "No agents yet. Click 'Add New Agent' to start.",
+      "notConfigured": "Not configured"
+    },
+    "dialog": {
+      "createTitle": "Add New AI Agent",
+      "createDescription": "Register agent info and Langfuse config to start tracking.",
+      "editTitle": "Edit Agent",
+      "editDescription": "Update connection info and Langfuse configuration.",
+      "deleteTitle": "Are you sure you want to delete this Agent?",
+      "deleteDescription": "This action cannot be undone. All evaluation history and configs for this agent will be permanently deleted.",
+      "cancel": "Cancel",
+      "create": "Create Agent",
+      "save": "Save Changes",
+      "delete": "Delete Agent"
+    },
+    "toast": {
+      "loadError": "Error loading agents list",
+      "fillRequired": "Please fill in all required fields",
+      "createSuccess": "Agent created successfully!",
+      "createError": "Error creating agent.",
+      "deleteSuccess": "Agent deleted successfully!",
+      "deleteError": "Error deleting agent",
+      "updateSuccess": "Agent updated successfully!",
+      "updateError": "Error updating agent."
+    }
+  },
+  "ScenarioHistory": {
+    "title": "Evaluation History",
+    "subtitle": "Track progress, scores, and detailed results of evaluation campaigns.",
+    "refresh": "Refresh",
+    "recentCampaigns": "Recent Evaluation Campaigns",
+    "table": {
+      "scenario": "Evaluation Scenario",
+      "agent": "Target Agent",
+      "status": "Status",
+      "executor": "Executor",
+      "result": "Result",
+      "duration": "Duration",
+      "actions": "Actions",
+      "syncing": "Syncing data...",
+      "empty": "No run history found. Get started in the {link}.",
+      "details": "Details",
+      "loadingInfo": "Loading info...",
+      "noDescription": "No description available for this scenario.",
+      "steps": "steps",
+      "running": "Running...",
+      "difficulty": {
+        "easy": "Easy",
+        "medium": "Medium",
+        "hard": "Hard"
+      }
+    },
+    "status": {
+      "completed": "Completed",
+      "failed": "Failed",
+      "running": "Running",
+      "queued": "Queued"
+    }
+  },
+  "Common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "add": "Add",
+    "edit": "Edit",
+    "search": "Search...",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm",
+    "close": "Close",
+    "lastUpdated": "Last Updated"
+  },
+  "Pricing": {
+    "title": "Simple, transparent pricing",
+    "subtitle": "Choose the perfect plan for your evaluation needs. No hidden fees.",
+    "monthly": "Monthly",
+    "yearly": "Annually",
+    "save20": "Save 20%",
+    "period_yearly": "/year",
+    "free": {
+      "name": "Free",
+      "price": "0",
+      "period": "/month",
+      "description": "Perfect for trying out LangEval and small experiments.",
+      "features": [
+        "3 Workspaces",
+        "9 Scenarios",
+        "99 Test Runs per month",
+        "Basic LLM Evaluation",
+        "Community Support"
+      ],
+      "action": "Get Started Free"
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "9",
+      "period": "/month",
+      "description": "For professionals and teams building robust AI agents.",
+      "features": [
+        "9 Workspaces",
+        "99 Scenarios",
+        "10,000 Test Runs per month",
+        "Advanced Red Teaming",
+        "30-day Trace Retention",
+        "Priority Email Support"
+      ],
+      "action": "Upgrade to Pro"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "price": "50",
+      "period": "/month",
+      "description": "For large organizations with strict security and volume needs.",
+      "features": [
+        "Unlimited Workspaces",
+        "Unlimited Scenarios",
+        "Unlimited Test Runs",
+        "Custom Deployments (On-Prem / VPC)",
+        "Single Sign-On (SSO)",
+        "24/7 SLA Support"
+      ],
+      "action": "Upgrade to Enterprise"
+    },
+    "billing_title": "Billing & Plans",
+    "billing_subtitle": "Manage your workspace subscription and usage limits.",
+    "available_plans": "Available Plans",
+    "active_subscription": "Active Subscription",
+    "current_plan": "Current Plan",
+    "tier_limits": "You are currently on the {plan} tier limits for this workspace.",
+    "max_workspaces": "Max Workspaces",
+    "max_scenarios": "Max Scenarios",
+    "monthly_test_runs": "Monthly Test Runs",
+    "red_teaming": "Red Teaming",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "unlimited": "Unlimited",
+    "active_plan_button": "Active Plan",
+    "extend_subscription": "Extend Subscription",
+    "upgrade_button": "Upgrade",
+    "processing_button": "Processing...",
+    "downgrade_unavailable": "Downgrade Unavailable",
+    "transaction_history": "Transaction History",
+    "date": "Date",
+    "amount": "Amount",
+    "paypal_tx_id": "Transaction ID",
+    "status": {
+      "completed": "Completed",
+      "pending": "Pending",
+      "failed": "Failed",
+      "active": "Active",
+      "canceled": "Canceled"
+    },
+    "no_transactions": "No recent transactions found.",
+    "renews_on": "Renews on",
+    "expires_on": "Expires on"
+  }
+}

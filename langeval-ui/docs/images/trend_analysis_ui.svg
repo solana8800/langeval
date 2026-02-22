@@ -1,0 +1,64 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f8f9fa" />
+  
+  <!-- Header -->
+  <rect width="800" height="50" fill="#fff" stroke="#e0e0e0" />
+  <text x="20" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">Advanced Reporting: Trend Analysis</text>
+
+  <!-- Chart Container -->
+  <rect x="20" y="70" width="500" height="300" fill="#fff" stroke="#e0e0e0" rx="4" />
+  <text x="35" y="100" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Score Evolution (Last 10 Builds)</text>
+  
+  <!-- Y Axis -->
+  <line x1="50" y1="120" x2="50" y2="340" stroke="#ccc" />
+  <text x="30" y="125" font-family="Arial, sans-serif" font-size="10" fill="#666">100</text>
+  <text x="30" y="340" font-family="Arial, sans-serif" font-size="10" fill="#666">0</text>
+  
+  <!-- X Axis -->
+  <line x1="50" y1="340" x2="480" y2="340" stroke="#ccc" />
+  
+  <!-- Trend Lines -->
+  <!-- Accuracy (Green) -->
+  <polyline points="50,200 100,190 150,180 200,160 250,150 300,140 350,140 400,130 450,120" fill="none" stroke="#00c853" stroke-width="3" />
+  <circle cx="450" cy="120" r="4" fill="#00c853" />
+  <text x="460" y="125" font-family="Arial, sans-serif" font-size="12" fill="#00c853" font-weight="bold">Accuracy 85% 📈</text>
+
+  <!-- Latency (Blue) -->
+  <polyline points="50,150 100,160 150,180 200,200 250,220 300,230 350,240 400,250 450,260" fill="none" stroke="#2196f3" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="460" y="265" font-family="Arial, sans-serif" font-size="12" fill="#2196f3">Latency 1.5s 📉</text>
+
+  <!-- Cost (Red) -->
+  <polyline points="50,300 100,290 150,280 200,270 250,250 300,220 350,200 400,180 450,160" fill="none" stroke="#d50000" stroke-width="3" />
+  <circle cx="450" cy="160" r="4" fill="#d50000" />
+  <text x="460" y="165" font-family="Arial, sans-serif" font-size="12" fill="#d50000" font-weight="bold">Cost $15 ⚠️</text>
+
+  <!-- Insights Panel -->
+  <rect x="540" y="70" width="240" height="300" fill="#fff" stroke="#e0e0e0" rx="4" />
+  <rect x="540" y="70" width="240" height="40" fill="#e3f2fd" rx="4" />
+  <text x="555" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1565c0">AI Insights</text>
+  
+  <rect x="555" y="120" width="210" height="80" fill="#fff3e0" stroke="#ffe0b2" rx="4" />
+  <text x="565" y="140" font-family="Arial, sans-serif" font-size="12" fill="#e65100">💡 Cost is increasing</text>
+  <text x="565" y="160" font-family="Arial, sans-serif" font-size="12" fill="#e65100">significantly in V2.1 due to</text>
+  <text x="565" y="180" font-family="Arial, sans-serif" font-size="12" fill="#e65100">larger Context Window.</text>
+
+  <rect x="555" y="220" width="210" height="80" fill="#e8f5e9" stroke="#c8e6c9" rx="4" />
+  <text x="565" y="240" font-family="Arial, sans-serif" font-size="12" fill="#2e7d32">💡 Recommendation:</text>
+  <text x="565" y="260" font-family="Arial, sans-serif" font-size="12" fill="#2e7d32">Consider caching RAG</text>
+  <text x="565" y="280" font-family="Arial, sans-serif" font-size="12" fill="#2e7d32">results.</text>
+
+  <!-- Bottom: RCA Summary -->
+  <rect x="20" y="390" width="760" height="90" fill="#fff" stroke="#e0e0e0" rx="4" />
+  <text x="35" y="415" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Root Cause Analysis</text>
+  
+  <circle cx="60" cy="450" r="20" fill="#ef5350" />
+  <text x="90" y="455" font-family="Arial, sans-serif" font-size="12" fill="#333">40% Hallucination</text>
+  
+  <circle cx="250" cy="450" r="20" fill="#ffa726" />
+  <text x="280" y="455" font-family="Arial, sans-serif" font-size="12" fill="#333">30% Safety</text>
+
+  <rect x="600" y="435" width="160" height="30" fill="#333" rx="4" />
+  <text x="630" y="455" font-family="Arial, sans-serif" font-size="12" fill="#fff" font-weight="bold">Drill Down ➡️</text>
+
+</svg>

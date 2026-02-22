@@ -1,0 +1,21 @@
+[project]
+name = "identity-service"
+version = "0.1.0"
+description = "Identity Service (Entra ID) for AI Agent Evaluation"
+authors = [
+    {name = "AI Agent Team", email = "dev@example.com"},
+]
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "python-jose[cryptography]>=3.3.0",
+    "httpx>=0.24.0",
+    "sqlalchemy>=2.0.0",
+    "psycopg2-binary>=2.9.0",
+    "pydantic>=2.0.0"
+]
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

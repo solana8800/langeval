@@ -1,0 +1,21 @@
+[project]
+name = "simulation-worker"
+version = "0.1.0"
+description = "AutoGen Simulation Worker for AI Agent Evaluation"
+authors = [
+    {name = "AI Agent Team", email = "dev@example.com"},
+]
+dependencies = [
+    "pyautogen>=0.2.0",
+    "aiokafka>=0.8.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "httpx>=0.24.0",
+    "openai>=1.0.0" 
+]
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

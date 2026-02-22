@@ -1,0 +1,19 @@
+[project]
+name = "resource-service"
+version = "0.1.0"
+description = "Resource Management Service for AI Agent Evaluation"
+authors = [
+    {name = "AI Agent Team", email = "dev@example.com"},
+]
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "sqlmodel>=0.0.8",
+    "psycopg2-binary>=2.9.0",
+    "pydantic-settings>=2.0.0"
+]
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

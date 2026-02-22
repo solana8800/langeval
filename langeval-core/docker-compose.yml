@@ -1,0 +1,455 @@
+services:
+  # --- Data Layer ---
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-eval_db}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin} -d ${POSTGRES_DB:-eval_db}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  clickhouse:
+    container_name: clickhouse
+    image: clickhouse/clickhouse-server:25.12-alpine
+    restart: always
+    environment:
+      CLICKHOUSE_DB: logs_db
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: "password"
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      - clickhouse:/var/lib/clickhouse
+    networks:
+      - app-network
+
+  redis:
+    container_name: redis
+    image: redis/redis-stack-server:7.4.0-v8
+    pull_policy: if_not_present
+    restart: always
+    # command: redis-server --requirepass myredissecret # redis-stack uses different auth or REDIS_ARGS
+    environment:
+      REDIS_ARGS: "--requirepass myredissecret"
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+    networks:
+      - app-network
+
+  # --- Event Bus ---
+  zookeeper:
+    container_name: zookeeper
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - app-network
+
+  kafka:
+    container_name: kafka
+    image: confluentinc/cp-kafka:7.4.0
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    networks:
+      - app-network
+    healthcheck:
+      test: nc -z localhost 9092 || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:v0.7.2
+    pull_policy: if_not_present
+    ports:
+      - "8082:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    depends_on:
+      kafka:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  # --- Observability ---
+  minio:
+    container_name: minio
+    image: minio/minio:RELEASE.2025-09-07T16-13-09Z-cpuv1
+    pull_policy: if_not_present
+    restart: always
+    ports:
+      - "9090:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: miniosecret
+    volumes:
+      - minio:/data
+    networks:
+      - app-network
+
+  minio-init:
+    container_name: minio-init
+    image: minio/mc:RELEASE.2025-08-13T08-35-41Z-cpuv1
+    pull_policy: if_not_present
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c " until (/usr/bin/mc alias set myminio http://minio:9000 minio miniosecret) do sleep 1; done; /usr/bin/mc mb --ignore-existing myminio/langfuse-events; /usr/bin/mc anonymous set public myminio/langfuse-events; "
+    networks:
+      - app-network
+
+  langfuse-server:
+    container_name: langfuse-server
+    image: langfuse/langfuse:3.152.0
+    pull_policy: if_not_present
+    depends_on:
+      - postgres
+      - redis
+      - minio
+      - clickhouse
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-password}@postgres:5432/langfuse_db
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-supersecret}
+      - SALT=${SALT:-supersecret}
+      - ENCRYPTION_KEY=bb306d480f3d47c3743a06cdf6891b038d3795caf51f17c39d8912d847d4848c
+      - TELEMETRY_ENABLED=false
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_AUTH=myredissecret
+      # ClickHouse Configuration
+      - CLICKHOUSE_URL=http://clickhouse:8123
+      - CLICKHOUSE_MIGRATION_URL=clickhouse://clickhouse:9000
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=password
+      - CLICKHOUSE_CLUSTER_ENABLED=false
+      # MinIO / S3 Configuration for V3
+      - LANGFUSE_S3_EVENT_UPLOAD_BUCKET=langfuse-events
+      - LANGFUSE_S3_EVENT_UPLOAD_REGION=auto
+      - LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID=minio
+      - LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY=miniosecret
+      - LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT=http://minio:9000
+      - LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE=true
+      - DISABLE_LATEST_RELEASE_CHECK=true
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+  langfuse-worker:
+    container_name: langfuse-worker
+    image: langfuse/langfuse-worker:3.152.0
+    pull_policy: if_not_present
+    depends_on:
+      - postgres
+      - redis
+      - minio
+      - clickhouse
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-password}@postgres:5432/langfuse_db
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-supersecret}
+      - SALT=${SALT:-supersecret}
+      - ENCRYPTION_KEY=bb306d480f3d47c3743a06cdf6891b038d3795caf51f17c39d8912d847d4848c
+      - TELEMETRY_ENABLED=false
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_AUTH=myredissecret
+      # ClickHouse Configuration
+      - CLICKHOUSE_URL=http://clickhouse:8123
+      - CLICKHOUSE_MIGRATION_URL=clickhouse://clickhouse:9000
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=password
+      - CLICKHOUSE_CLUSTER_ENABLED=false
+      # MinIO / S3 Configuration for V3
+      - LANGFUSE_S3_EVENT_UPLOAD_BUCKET=langfuse-events
+      - LANGFUSE_S3_EVENT_UPLOAD_REGION=auto
+      - LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID=minio
+      - LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY=miniosecret
+      - LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT=http://minio:9000
+      - LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE=true
+      - DISABLE_LATEST_RELEASE_CHECK=true
+    networks:
+      - app-network
+
+  # --- Core Services ---
+  orchestrator:
+    container_name: orchestrator
+    build: ./orchestrator
+    ports:
+      - "8001:8000"
+    environment:
+      - REDIS_URL=redis://:myredissecret@redis:6379
+      - KAFKA_BOOTSTRAP_SERVERS=${KAFKA_BOOTSTRAP_SERVERS:-kafka:29092}
+      - KAFKA_TOPIC_SIMULATION_REQUESTS=${KAFKA_TOPIC_SIMULATION_REQUESTS:-simulation.requests}
+      - KAFKA_TOPIC_EVALUATION_REQUESTS=${KAFKA_TOPIC_EVALUATION_REQUESTS:-evaluation.requests}
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY}
+      - LANGFUSE_HOST=${LANGFUSE_HOST}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ENCRYPTION_KEY=JANih3gpIplm9lRHHiGK/k+KUCACNLCfkuILjViqH5g=
+    depends_on:
+      kafka:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - app-network
+    volumes:
+      - ./orchestrator:/app
+
+  identity-service:
+    container_name: identity-service
+    build: ./identity-service
+    ports:
+      - "8002:8000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-eval_db}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    volumes:
+      - ./identity-service:/app
+
+  billing-service:
+    container_name: billing-service
+    build: ./billing-service
+    ports:
+      - "8009:8000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-eval_db}
+      - PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID:-}
+      - PAYPAL_CLIENT_SECRET=${PAYPAL_CLIENT_SECRET:-}
+      - PAYPAL_MODE=${PAYPAL_MODE:-sandbox}
+      - PAYPAL_PRO_PLAN_ID=${PAYPAL_PRO_PLAN_ID:-}
+      - PAYPAL_ENTERPRISE_PLAN_ID=${PAYPAL_ENTERPRISE_PLAN_ID:-}
+      - PAYPAL_PRO_ANNUAL_PLAN_ID=${PAYPAL_PRO_ANNUAL_PLAN_ID:-}
+      - PAYPAL_ENTERPRISE_ANNUAL_PLAN_ID=${PAYPAL_ENTERPRISE_ANNUAL_PLAN_ID:-}
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    volumes:
+      - ./billing-service:/app
+
+  resource-service:
+    container_name: resource-service
+    build: ./resource-service
+    ports:
+      - "8003:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL}
+      - MODEL_NAME=${MODEL_NAME:-deepseek-chat}
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY}
+      - LANGFUSE_HOST=${LANGFUSE_HOST:-http://langfuse-server:3000}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-eval_db}
+      - ENCRYPTION_KEY=JANih3gpIplm9lRHHiGK/k+KUCACNLCfkuILjViqH5g=
+      # Performance Optimization
+      - REDIS_URL=${REDIS_URL:-redis://:myredissecret@redis:6379}
+      - DB_POOL_SIZE=${DB_POOL_SIZE:-10}
+      - DB_MAX_OVERFLOW=${DB_MAX_OVERFLOW:-20}
+      - DB_POOL_TIMEOUT=${DB_POOL_TIMEOUT:-30}
+      - DB_POOL_RECYCLE=${DB_POOL_RECYCLE:-3600}
+      - DB_ECHO=${DB_ECHO:-false}
+    volumes:
+      - ./resource-service:/app
+    depends_on:
+      - redis
+      - kafka
+      - langfuse-server
+    networks:
+      - app-network
+
+  # --- Workers ---
+  simulation-worker:
+    container_name: simulation-worker
+    build: ./simulation-worker
+    ports:
+      - "8004:8000"
+    environment:
+      - REDIS_URL=redis://:myredissecret@redis:6379
+      - KAFKA_BOOTSTRAP_SERVERS=${KAFKA_BOOTSTRAP_SERVERS:-kafka:29092}
+      - KAFKA_TOPIC_SIMULATION_REQUESTS=${KAFKA_TOPIC_SIMULATION_REQUESTS:-simulation.requests}
+      - KAFKA_TOPIC_SIMULATION_COMPLETED=${KAFKA_TOPIC_SIMULATION_COMPLETED:-simulation.completed}
+      - KAFKA_TOPIC_TRACES=${KAFKA_TOPIC_TRACES:-traces}
+      - KAFKA_GROUP_SIMULATION=${KAFKA_GROUP_SIMULATION:-simulation-group}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL}
+      - MODEL_NAME=${MODEL_NAME:-deepseek-chat}
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY}
+      - LANGFUSE_HOST=${LANGFUSE_HOST}
+      - ENCRYPTION_KEY=JANih3gpIplm9lRHHiGK/k+KUCACNLCfkuILjViqH5g=
+      - RESOURCE_SERVICE_URL=http://resource-service:8000
+    depends_on:
+      - orchestrator
+    networks:
+      - app-network
+    volumes:
+      - ./simulation-worker:/app
+
+  evaluation-worker:
+    container_name: evaluation-worker
+    build: ./evaluation-worker
+    deploy:
+      replicas: 1
+    ports:
+      - "8005:8000"
+    environment:
+      - REDIS_URL=redis://:myredissecret@redis:6379
+      - KAFKA_BOOTSTRAP_SERVERS=${KAFKA_BOOTSTRAP_SERVERS:-kafka:29092}
+      - KAFKA_TOPIC_EVALUATION_REQUESTS=${KAFKA_TOPIC_EVALUATION_REQUESTS:-evaluation.requests}
+      - KAFKA_TOPIC_EVALUATION_COMPLETED=${KAFKA_TOPIC_EVALUATION_COMPLETED:-evaluation.completed}
+      - KAFKA_TOPIC_TRACES=${KAFKA_TOPIC_TRACES:-traces}
+      - KAFKA_GROUP_EVALUATION=${KAFKA_GROUP_EVALUATION:-evaluation-group}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL}
+      - MODEL_NAME=${MODEL_NAME:-deepseek-chat}
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY}
+      - LANGFUSE_HOST=${LANGFUSE_HOST}
+    depends_on:
+      kafka:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      langfuse-server:
+        condition: service_started
+    networks:
+      - app-network
+    volumes:
+      - ./evaluation-worker:/app
+
+  gen-ai-service:
+    container_name: gen-ai-service
+    build: ./gen-ai-service
+    ports:
+      - "8006:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL}
+      - MODEL_NAME=${MODEL_NAME:-deepseek-chat}
+    networks:
+      - app-network
+    volumes:
+      - ./gen-ai-service:/app
+
+  data-ingestion:
+    container_name: data-ingestion
+    build: ./data-ingestion
+    ports:
+      - "8008:8080"
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=${KAFKA_BOOTSTRAP_SERVERS:-kafka:29092}
+      - KAFKA_TOPIC_TRACES=${KAFKA_TOPIC_TRACES:-traces}
+      - KAFKA_GROUP_INGESTION=${KAFKA_GROUP_INGESTION:-ingestion-group-rust}
+      - CLICKHOUSE_URL=${CLICKHOUSE_URL:-http://clickhouse:8123}
+    depends_on:
+      kafka:
+        condition: service_healthy
+      clickhouse:
+        condition: service_started
+    networks:
+      - app-network
+    volumes:
+      - data-ingestion:/app
+
+  # --- Proxy & SSL ---
+  nginx:
+    image: nginx:1.24-alpine
+    container_name: nginx
+    restart: unless-stopped
+    profiles: ["prod"]
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - identity-service
+      - resource-service
+      - orchestrator
+      - gen-ai-service
+    networks:
+      - app-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    profiles: ["prod"]
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+      - app-network
+
+volumes:
+  postgres:
+    name: postgres
+  clickhouse:
+    name: clickhouse
+  redis:
+    name: redis
+  minio:
+    name: minio
+  orchestrator:
+    name: orchestrator
+  identity-service:
+    name: identity-service
+  billing-service:
+    name: billing-service
+  resource-service:
+    name: resource-service
+  simulation-worker:
+    name: simulation-worker
+  evaluation-worker:
+    name: evaluation-worker
+  gen-ai-service:
+    name: gen-ai-service
+  data-ingestion:
+    name: data-ingestion
+
+networks:
+  app-network:
+    driver: bridge

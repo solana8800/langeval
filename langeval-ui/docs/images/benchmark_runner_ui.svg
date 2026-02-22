@@ -1,0 +1,58 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#fff" />
+  
+  <!-- Header -->
+  <text x="20" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#333">Academic Benchmark Runner</text>
+  <line x1="20" y1="60" x2="780" y2="60" stroke="#eee" />
+
+  <!-- Suite Selector -->
+  <text x="20" y="90" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#555">Select Benchmarks</text>
+  
+  <!-- Card 1: MMLU (Selected) -->
+  <rect x="20" y="110" width="200" height="80" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="6" />
+  <!-- Checkbox Checked -->
+  <rect x="35" y="125" width="16" height="16" fill="#1565c0" rx="2" />
+  <path d="M39 133 L43 137 L49 129" stroke="#fff" stroke-width="2" fill="none" />
+  <text x="60" y="138" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1565c0">MMLU</text>
+  <text x="35" y="165" font-family="Arial, sans-serif" font-size="12" fill="#1565c0">General Knowledge</text>
+
+  <!-- Card 2: GSM8K (Unchecked) -->
+  <rect x="240" y="110" width="200" height="80" fill="#fff" stroke="#ccc" rx="6" />
+  <!-- Checkbox Unchecked -->
+  <rect x="255" y="125" width="16" height="16" fill="#fff" stroke="#999" rx="2" />
+  <text x="280" y="138" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#666">GSM8K</text>
+  <text x="255" y="165" font-family="Arial, sans-serif" font-size="12" fill="#666">Math Reasoning</text>
+
+  <!-- Card 3: TruthfulQA (Selected) -->
+  <rect x="460" y="110" width="200" height="80" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="6" />
+  <!-- Checkbox Checked -->
+  <rect x="475" y="125" width="16" height="16" fill="#1565c0" rx="2" />
+  <path d="M479 133 L483 137 L489 129" stroke="#fff" stroke-width="2" fill="none" />
+  <text x="500" y="138" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1565c0">TruthfulQA</text>
+  <text x="475" y="165" font-family="Arial, sans-serif" font-size="12" fill="#1565c0">Safety &amp; Hallucination</text>
+
+  <!-- Run Button -->
+  <rect x="20" y="210" width="220" height="40" fill="#2e7d32" rx="4" />
+  <!-- Play Icon -->
+  <polygon points="40,220 40,240 55,230" fill="#fff" />
+  <text x="65" y="235" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#fff">Run Selected (2)</text>
+
+  <!-- Results Section -->
+  <text x="20" y="290" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">Live Results</text>
+  
+  <!-- Result Row 1 -->
+  <text x="20" y="330" font-family="Arial, sans-serif" font-size="14" fill="#333" font-weight="bold">MMLU</text>
+  <rect x="120" y="315" width="400" height="20" fill="#eee" rx="10" />
+  <rect x="120" y="315" width="328" height="20" fill="#4caf50" rx="10" /> <!-- 82% -->
+  <text x="540" y="330" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4caf50">82%</text>
+  <text x="600" y="330" font-family="Arial, sans-serif" font-size="12" fill="#888">(SOTA: 86%)</text>
+
+  <!-- Result Row 2 -->
+  <text x="20" y="370" font-family="Arial, sans-serif" font-size="14" fill="#333" font-weight="bold">TruthfulQA</text>
+  <rect x="120" y="355" width="400" height="20" fill="#eee" rx="10" />
+  <rect x="120" y="355" width="260" height="20" fill="#ff9800" rx="10" /> <!-- 65% -->
+  <text x="540" y="370" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">65%</text>
+  <text x="600" y="370" font-family="Arial, sans-serif" font-size="12" fill="#888">(SOTA: 70%)</text>
+
+</svg>

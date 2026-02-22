@@ -1,0 +1,20 @@
+[project]
+name = "evaluation-worker"
+version = "0.1.0"
+description = "DeepEval Worker for AI Agent Evaluation"
+authors = [
+    {name = "AI Agent Team", email = "dev@example.com"},
+]
+dependencies = [
+    "deepeval>=0.20.0",
+    "aiokafka>=0.8.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "openai>=1.0.0"
+]
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
