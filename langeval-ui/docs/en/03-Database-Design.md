@@ -19,75 +19,96 @@ We use the right tool for the right job.
 
 ## 2. POSTGRESQL SCHEMA (Metadata & Orchestration)
 
-Focuses on managing **Test Campaigns** and **Scenarios**.
+The PostgreSQL database acts as the single source of truth for user identities, billing, workspaces, resource configurations (Agents, Scenarios, Knowledge Bases), and campaign execution tracking.
 
 ### 2.1. ER Diagram
 ```mermaid
 erDiagram
-    PROJECT ||--o{ SCENARIO : has
-    PROJECT ||--o{ CAMPAIGN : runs
-    SCENARIO ||--o{ TEST_CASE : defines
-    CAMPAIGN ||--o{ CAMPAIGN_RUN : history
+    %% Identity & Billing
+    USER ||--o{ WORKSPACE_MEMBER : joins
+    WORKSPACE ||--o{ WORKSPACE_MEMBER : includes
+    USER ||--o{ WORKSPACE : owns
+    USER ||--o| SUBSCRIPTION : has
+    PLAN ||--o{ SUBSCRIPTION : defines
+
+    %% Workspace Resources
+    WORKSPACE ||--o{ AGENT_REF : contains
+    WORKSPACE ||--o{ SCENARIO_REF : contains
+    WORKSPACE ||--o{ KNOWLEDGE_BASE_REF : contains
+    WORKSPACE ||--o{ MODEL_REF : contains
+
+    %% Campaigns & Execution
+    SCENARIO_REF ||--o{ CAMPAIGN : defines_flow
+    AGENT_REF ||--o{ CAMPAIGN : tested_in
+    CAMPAIGN ||--o{ MANUAL_REVIEW : generates
     
-    CAMPAIGN {
+    AGENT_REF ||--o{ RED_TEAMING_CAMPAIGN : attacked_in
+    WORKSPACE ||--o{ BATTLE_CAMPAIGN : runs
+    WORKSPACE ||--o{ BENCHMARK_RESULT : records
+
+    USER {
+        uuid id PK
+        string email
+        string google_id
+    }
+    WORKSPACE {
         uuid id PK
         string name
-        json config_snapshot "Prompt, Model, Thresholds"
-        string schedule "CRON"
+        uuid owner_id FK
+        boolean is_personal
     }
-
-    CAMPAIGN_RUN {
-        uuid id PK
-        uuid campaign_id FK
-        timestamp started_at
-        float pass_rate
-        string status "RUNNING/COMPLETED/FAILED"
+    AGENT_REF {
+        string id PK
+        uuid workspace_id FK
+        string name
+        string endpoint_url
+        string type "E.g. RAG Chatbot"
     }
-
-    SCENARIO {
-        uuid id PK
-        string name "E.g: Angry Customer"
-        string persona_prompt
-        uuid golden_dataset_id FK
+    SCENARIO_REF {
+        string id PK
+        uuid workspace_id FK
+        string name
+        json nodes "ReactFlow Nodes"
+        json edges "ReactFlow Edges"
+    }
+    CAMPAIGN {
+        string id PK
+        string scenario_id FK
+        string agent_id FK
+        string name
+        string status "queued, running, completed"
+    }
+    RED_TEAMING_CAMPAIGN {
+        string id PK
+        string agent_id FK
+        string strategy "jailbreak, toxicity..."
+        string status
     }
 ```
 
-### 2.2. Key Tables DDL
+### 2.2. Core Tables
+The platform uses a microservice architecture sharing the same PostgreSQL instance or schema structure.
 
-**Table: `campaigns`**
-Manages recurring test runs.
-```sql
-CREATE TABLE campaigns (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    project_id UUID REFERENCES projects(id),
-    name VARCHAR(255) NOT NULL,
-    type VARCHAR(50) NOT NULL, -- 'RED_TEAMING', 'REGRESSION', 'A_B_TEST'
-    
-    -- Configuration snapshot at campaign creation
-    config JSONB NOT NULL, 
-    -- E.g: { "model_a": "gpt-4", "simulator_model": "gpt-4-turbo", "metrics": ["toxicity", "relevancy"] }
-    
-    cron_schedule VARCHAR(50), -- NULL if manual
-    created_at TIMESTAMP DEFAULT NOW()
-);
-```
+**Identity & Billing (`users`, `workspaces`, `plans`, `subscriptions`)**
+Manages access control and tenant isolation.
+*   `users`: Stores user credentials (`email`, `google_id`).
+*   `workspaces`: Represents a tenant boundary. `owner_id` links to `users`.
+*   `workspace_members`: Defines RBAC (`OWNER`, `EDITOR`, `VIEWER`) across workspaces.
+*   `subscriptions` & `plans`: Manages monthly/annual quotas and features limitations.
 
-**Table: `scenarios`**
-Defines test scenarios (Simulation Configs).
-```sql
-CREATE TABLE scenarios (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    project_id UUID REFERENCES projects(id),
-    name VARCHAR(255),
-    description TEXT,
-    
-    -- Config for AutoGen UserProxy
-    persona_template TEXT, -- "You are a {age} year old user..."
-    complexity_level INT DEFAULT 1, -- 1-5
-    
-    created_at TIMESTAMP DEFAULT NOW()
-);
-```
+**Resource Service (`agent_ref`, `scenario_ref`, `knowledge_base_ref`, `model_ref`)**
+Stores the core entities required for AI evaluations within a workspace.
+*   `agent_ref`: Configurations for target bots (name, endpoint URL, API keys, Langfuse integration).
+*   `scenario_ref`: Visual test scenarios built with ReactFlow. Stores `nodes` and `edges` representing the test flow.
+*   `knowledge_base_ref`: Documents/Vector DB settings used for Context/RAG testing.
+*   `model_ref`: Connection configurations to various LLM Providers (OpenAI, Anthropic, Local) used by the simulator or evaluation logic.
+
+**Orchestrator & Execution (`campaigns`, `red_teaming_campaign`, `battle_campaign`)**
+Tracks the state of active evaluations.
+*   `campaigns`: Tracks deterministic/graph-based simulation runs (`scenario_id`, `agent_id`, `status`).
+*   `red_teaming_campaign`: Tracks adversarial operations detailing `strategy` (e.g. jailbreak, prompt-injection), `intensity`, and vulnerability reports (`critical_count`, `high_count`).
+*   `battle_campaign`: Orchestrates A/B testing (Agent A vs Agent B) tracking `agent_a_wins`, `agent_b_wins`, `ties`, and `current_turn`.
+*   `manual_review`: Pending Human-in-the-Loop interventions holding test cases awaiting manual grading.
 
 ---
 
