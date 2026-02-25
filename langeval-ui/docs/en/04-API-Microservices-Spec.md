@@ -162,7 +162,127 @@ Results after running LLM evaluation.
 
 ---
 
-## 7. Web Application API (BFF Specification)
+## 7. Extended Microservices REST API (Detailed Specification)
+
+This section maps the specific endpoints exposed by each microservice (accessible via the API Gateway).
+
+### 7.1. Identity Service
+Authentication, Users, and Workspace management.
+
+- [x] `POST /identity/api/v1/auth/google`: Authenticate via Google OAuth.
+- [x] `GET /identity/api/v1/workspaces/me`: Get current user profile.
+- [x] `GET /identity/api/v1/workspaces`: List user workspaces.
+- [x] `POST /identity/api/v1/workspaces`: Create a new workspace.
+- [x] `GET /identity/api/v1/workspaces/{id}/members`: List members of a workspace.
+- [x] `DELETE /identity/api/v1/workspaces/{workspace_id}/members/{user_id}`: Remove a member.
+- [x] `POST /identity/api/v1/workspaces/{id}/invites`: Create a workspace invitation.
+- [x] `GET /identity/api/v1/workspaces/{id}/invites`: List pending invites for a workspace.
+- [x] `GET /identity/api/v1/invites/{code}`: Get invite details by code.
+- [x] `POST /identity/api/v1/invites/{code}/accept`: Accept an invitation.
+- [x] `DELETE /identity/api/v1/invites/{code}`: Cancel an invitation.
+
+### 7.2. Billing Service
+Subscription and Quota Management.
+
+- [x] `GET /billing/api/v1/plans`: List available subscription plans.
+- [x] `GET /billing/api/v1/subscription`: Get current user subscription details.
+- [x] `POST /billing/api/v1/usage/increment`: Increment resource usage (e.g., test runs).
+- [x] `POST /billing/api/v1/checkout`: Initiate PayPal checkout session.
+- [x] `POST /billing/api/v1/checkout/success`: Capture successful PayPal payment.
+- [x] `GET /billing/api/v1/transactions`: View transaction history.
+- [x] `POST /billing/api/v1/webhook`: Handle external payment webhooks (e.g., PayPal IPN).
+
+### 7.3. Resource Service
+Core CRUD operations for evaluation resources.
+
+#### Agent & Model Management
+- [x] `GET /resource/api/v1/agents`: List target Agents.
+- [x] `POST /resource/api/v1/agents`: Register an Agent.
+- [x] `GET /resource/api/v1/agents/{id}`: Get Agent details.
+- [x] `PUT /resource/api/v1/agents/{id}`: Update Agent.
+- [x] `DELETE /resource/api/v1/agents/{id}`: Delete an Agent.
+- [x] `GET /resource/api/v1/models_llm`: List LLM configurations (OpenAI, VLLM, etc.).
+- [x] `POST /resource/api/v1/models_llm`: Add a new LLM configuration.
+- [x] `PUT /resource/api/v1/models_llm/{id}`: Update LLM config.
+- [x] `DELETE /resource/api/v1/models_llm/{id}`: Remove LLM config.
+
+#### Scenarios & Testing
+- [x] `GET /resource/api/v1/scenarios`: List Graph-based Scenarios.
+- [x] `POST /resource/api/v1/scenarios`: Create a Scenario.
+- [x] `GET /resource/api/v1/scenarios/{id}`: Get Scenario ReactFlow JSON structure.
+- [x] `PUT /resource/api/v1/scenarios/{id}`: Update Scenario.
+- [x] `DELETE /resource/api/v1/scenarios/{id}`: Delete Scenario.
+- [x] `POST /resource/api/v1/scenarios/generate-ai`: Generate AI-driven Scenario structure from text prompt.
+
+#### Knowledge Bases (RAG)
+- [x] `GET /resource/api/v1/knowledge_bases`: List Knowledge Bases.
+- [x] `POST /resource/api/v1/knowledge_bases`: Connect a new Knowledge Base.
+- [x] `PUT /resource/api/v1/knowledge_bases/{id}`: Update Knowledge Base settings.
+- [x] `DELETE /resource/api/v1/knowledge_bases/{id}`: Disconnect Knowledge Base.
+
+#### Metrics & Evaluation
+- [x] `GET /resource/api/v1/metrics`: List available evaluation Metrics.
+- [x] `POST /resource/api/v1/metrics`: Define a custom Metric.
+- [x] `PUT /resource/api/v1/metrics/{id}`: Update Metric settings/thresholds.
+- [x] `DELETE /resource/api/v1/metrics/{id}`: Delete custom Metric.
+- [x] `POST /resource/api/v1/metrics/seed`: **[System]** Seed default metrics (RAG, Toxicity, etc.).
+- [x] `GET /resource/api/v1/traces`: List evaluation traces (Integration with Langfuse).
+- [x] `GET /resource/api/v1/traces/{id}`: Get a specific trace detail.
+
+#### Human-in-the-Loop Reviews
+- [x] `GET /resource/api/v1/reviews/manual-reviews`: Fetch queue of items needing human review.
+- [x] `POST /resource/api/v1/reviews`: Create a new manual review request.
+- [x] `POST /resource/api/v1/reviews/{id}/decision`: Submit human judgment (rating/correction).
+
+#### Advanced Campaigns Data (Battle Arena & Red Teaming)
+These endpoints serve historic states and metadata for specialized campaigns managed by Orchestrator.
+- [x] `GET /resource/api/v1/battle/campaigns`: List A/B testing campaigns.
+- [x] `GET /resource/api/v1/battle/campaigns/{id}`: Get Battle Campaign outcome.
+- [x] `GET /resource/api/v1/battle/campaigns/{id}/turns`: Get distinct turns in an Arena battle.
+- [x] `GET /resource/api/v1/red_teaming/campaigns`: List all Red Teaming operations.
+- [x] `GET /resource/api/v1/red_teaming/campaigns/{id}`: View status of a Red Teaming run.
+- [x] `GET /resource/api/v1/red_teaming/campaigns/{id}/stats`: Vulnerability statistics.
+- [x] `GET /resource/api/v1/red_teaming/campaigns/{id}/logs`: Raw attack iteration logs.
+- [x] `GET /resource/api/v1/benchmarks`: View generic Benchmark performance (e.g., MMLU).
+- [x] `GET /resource/api/v1/benchmarks/{id}`: Get details of a specific Benchmark run.
+
+#### Dashboard Analytics
+- [x] `GET /resource/api/v1/dashboard/summary`: High-level evaluation metrics.
+- [x] `GET /resource/api/v1/dashboard/trends`: Timeseries pass/fail data.
+- [x] `GET /resource/api/v1/dashboard/metrics-breakdown`: Score distribution by category.
+
+### 7.4. Orchestrator Service
+Controls the execution logic (LangGraph State Machines) of various evaluation workflows.
+
+#### Standard Campaigns
+- [x] `POST /orchestrator/api/v1/campaigns`: Initiate a standard simulation Job.
+- [x] `GET /orchestrator/api/v1/campaigns`: List active/recent Campaign Jobs.
+- [x] `GET /orchestrator/api/v1/campaigns/{id}`: Check execution status of a Campaign.
+- [x] `GET /orchestrator/api/v1/campaigns/{id}/state`: Stream or fetch the live state machinery status of a Campaign.
+
+#### Red Teaming Execution
+- [x] `POST /orchestrator/api/v1/red-teaming`: Start an adversarial probing campaign.
+- [x] `GET /orchestrator/api/v1/red-teaming/campaigns`: List executing/queued Red Teaming jobs.
+
+#### Battle Arena Execution
+- [x] `POST /orchestrator/api/v1/battle/start`: Start a Model A vs Model B evaluation run.
+- [x] `GET /orchestrator/api/v1/battle/{id}/state`: View real-time Arena scores.
+
+#### Benchmark Execution
+- [x] `GET /orchestrator/api/v1/benchmarks/list`: Fetch available standard benchmark suites.
+- [x] `POST /orchestrator/api/v1/benchmarks/run`: Run predefined benchmarks against an Agent.
+- [x] `GET /orchestrator/api/v1/benchmarks/history`: List historically executed benchmarks.
+- [x] `GET /orchestrator/api/v1/benchmarks/history/{id}`: See historical benchmark specifics.
+
+### 7.5. Gen AI Service
+Data Generation & Setup features utilizing Auxiliary AI agents.
+
+- [x] `POST /gen-ai/api/v1/generate/personas`: Synthesize User Personas based on context mapping.
+- [x] `POST /gen-ai/api/v1/generate/test-cases`: Generate complex Test Cases adapted for given personas.
+
+---
+
+## 8. Web Application API (BFF Specification & Mockups)
 
 Describes the simulated API endpoints for the Evaluation Platform. Frontend components call these APIs to display data.
 
@@ -178,11 +298,11 @@ Base URL: `/api/v1`
 
 ---
 
-## 7.1. Navigation & System
+## 8.1. Navigation & System
 ### Get Menu Structure
 Returns sidebar menu items based on user permissions.
 
-*   **Endpoint**: `/navigation`
+- [ ] **Endpoint**: `/navigation`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -199,11 +319,11 @@ Returns sidebar menu items based on user permissions.
 
 ---
 
-## 7.2. Dashboard
+## 8.2. Dashboard
 ### Get System Health Metrics
 Returns overview metrics like uptime, request count, and error rate.
 
-*   **Endpoint**: `/dashboard/health`
+- [ ] **Endpoint**: `/dashboard/health`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -218,7 +338,7 @@ Returns overview metrics like uptime, request count, and error rate.
 ### Get Release Status
 Returns current release progress.
 
-*   **Endpoint**: `/dashboard/status`
+- [ ] **Endpoint**: `/dashboard/status`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -232,9 +352,9 @@ Returns current release progress.
 
 ---
 
-## 7.3. Agent Management
+## 8.3. Agent Management
 ### List Agents
-*   **Endpoint**: `/agents`
+- [ ] **Endpoint**: `/agents`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -245,7 +365,7 @@ Returns current release progress.
     ```
 
 ### Create New Agent
-*   **Endpoint**: `/agents`
+- [ ] **Endpoint**: `/agents`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -261,7 +381,7 @@ Returns current release progress.
     ```
 
 ### Update Agent
-*   **Endpoint**: `/agents/:id`
+- [ ] **Endpoint**: `/agents/:id`
 *   **Method**: `PUT`
 *   **Body**:
     ```json
@@ -273,15 +393,15 @@ Returns current release progress.
 *   **Response**: `200 OK`
 
 ### Delete Agent
-*   **Endpoint**: `/agents/:id`
+- [ ] **Endpoint**: `/agents/:id`
 *   **Method**: `DELETE`
 *   **Response**: `204 No Content`
 
 ---
 
-## 7.4. Scenario Builder
+## 8.4. Scenario Builder
 ### List Scenarios
-*   **Endpoint**: `/scenarios`
+- [ ] **Endpoint**: `/scenarios`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -291,7 +411,7 @@ Returns current release progress.
     ```
 
 ### Scenario Details
-*   **Endpoint**: `/scenarios/:id`
+- [ ] **Endpoint**: `/scenarios/:id`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -303,7 +423,7 @@ Returns current release progress.
     ```
 
 ### Create/Save Scenario
-*   **Endpoint**: `/scenarios`
+- [ ] **Endpoint**: `/scenarios`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -316,15 +436,15 @@ Returns current release progress.
 *   **Response**: `201 Created`
 
 ### Delete Scenario
-*   **Endpoint**: `/scenarios/:id`
+- [ ] **Endpoint**: `/scenarios/:id`
 *   **Method**: `DELETE`
 *   **Response**: `204 No Content`
 
 ---
 
-## 7.5. Knowledge Base Management
+## 8.5. Knowledge Base Management
 ### List Knowledge Bases
-*   **Endpoint**: `/knowledge-bases`
+- [ ] **Endpoint**: `/knowledge-bases`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -334,7 +454,7 @@ Returns current release progress.
     ```
 
 ### Connect New Knowledge Base
-*   **Endpoint**: `/knowledge-bases`
+- [ ] **Endpoint**: `/knowledge-bases`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -347,7 +467,7 @@ Returns current release progress.
 *   **Response**: `201 Created`
 
 ### Trigger Sync
-*   **Endpoint**: `/knowledge-bases/:id/sync`
+- [ ] **Endpoint**: `/knowledge-bases/:id/sync`
 *   **Method**: `POST`
 *   **Response**: `200 OK` (Async response)
     ```json
@@ -355,15 +475,15 @@ Returns current release progress.
     ```
 
 ### Delete Knowledge Base
-*   **Endpoint**: `/knowledge-bases/:id`
+- [ ] **Endpoint**: `/knowledge-bases/:id`
 *   **Method**: `DELETE`
 *   **Response**: `204 No Content`
 
 ---
 
-## 7.6. Team & Users
+## 8.6. Team & Users
 ### List Team Members
-*   **Endpoint**: `/team`
+- [ ] **Endpoint**: `/team`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -373,27 +493,27 @@ Returns current release progress.
     ```
 
 ### Invite Member
-*   **Endpoint**: `/team/invite`
+- [ ] **Endpoint**: `/team/invite`
 *   **Method**: `POST`
 *   **Body**: `{ "email": "new@example.com", "role": "EDITOR" }`
 *   **Response**: `200 OK`
 
 ### Update Status/Role
-*   **Endpoint**: `/team/:id/role`
+- [ ] **Endpoint**: `/team/:id/role`
 *   **Method**: `PATCH`
 *   **Body**: `{ "role": "VIEWER" }`
 *   **Response**: `200 OK`
 
 ### Delete Member
-*   **Endpoint**: `/team/:id`
+- [ ] **Endpoint**: `/team/:id`
 *   **Method**: `DELETE`
 *   **Response**: `204 No Content`
 
 ---
 
-## 7.7. Dev Console (CI/CD)
+## 8.7. Dev Console (CI/CD)
 ### Pipeline Logs
-*   **Endpoint**: `/dev-console/logs`
+- [ ] **Endpoint**: `/dev-console/logs`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -403,7 +523,7 @@ Returns current release progress.
     ```
 
 ### Failure Details
-*   **Endpoint**: `/dev-console/failure-detail`
+- [ ] **Endpoint**: `/dev-console/failure-detail`
 *   **Method**: `GET`
 *   **Query Params**: `?log_id=...`
 *   **Response**: `200 OK`
@@ -413,9 +533,9 @@ Returns current release progress.
 
 ---
 
-## 7.8. Red Teaming (Security)
+## 8.8. Red Teaming (Security)
 ### Attack Logs
-*   **Endpoint**: `/red-teaming/logs`
+- [ ] **Endpoint**: `/red-teaming/logs`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -425,7 +545,7 @@ Returns current release progress.
     ```
 
 ### Attack Statistics
-*   **Endpoint**: `/red-teaming/stats`
+- [ ] **Endpoint**: `/red-teaming/stats`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -433,17 +553,17 @@ Returns current release progress.
     ```
 
 ### Start Test Attack
-*   **Endpoint**: `/red-teaming/start`
+- [ ] **Endpoint**: `/red-teaming/start`
 *   **Method**: `POST`
 *   **Body**: `{ "strategy": "jailbreak", "intensity": 80 }`
 *   **Response**: `200 OK`
 
 ---
 
-## 7.9. Benchmarks
+## 8.9. Benchmarks
 ### Get Benchmark Scores
 Returns scores for common benchmark suites.
-*   **Endpoint**: `/benchmarks`
+- [ ] **Endpoint**: `/benchmarks`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -456,7 +576,7 @@ Returns scores for common benchmark suites.
     ```
 
 ### Run Benchmark
-*   **Endpoint**: `/benchmarks/run`
+- [ ] **Endpoint**: `/benchmarks/run`
 *   **Method**: `POST`
 *   **Body**: `{ "suites": ["mmlu", "gsm8k"] }`
 *   **Response**: `200 OK`
@@ -466,9 +586,9 @@ Returns scores for common benchmark suites.
 
 ---
 
-## 7.10. Battle Arena
+## 8.10. Battle Arena
 ### Chat History
-*   **Endpoint**: `/battle-arena/history`
+- [ ] **Endpoint**: `/battle-arena/history`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -480,7 +600,7 @@ Returns scores for common benchmark suites.
     ```
 
 ### Send Message (Model Comparison)
-*   **Endpoint**: `/battle-arena/send`
+- [ ] **Endpoint**: `/battle-arena/send`
 *   **Method**: `POST`
 *   **Body**: `{ "content": "Write a poem about autumn" }`
 *   **Response**: `200 OK`
@@ -493,9 +613,9 @@ Returns scores for common benchmark suites.
 
 ---
 
-## 7.11. Model Registry
+## 8.11. Model Registry
 ### List Models
-*   **Endpoint**: `/models`
+- [ ] **Endpoint**: `/models`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -505,7 +625,7 @@ Returns scores for common benchmark suites.
     ```
 
 ### Add New Model
-*   **Endpoint**: `/models`
+- [ ] **Endpoint**: `/models`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -520,12 +640,12 @@ Returns scores for common benchmark suites.
 *   **Response**: `201 Created`
 
 ### Delete Model
-*   **Endpoint**: `/models/:id`
+- [ ] **Endpoint**: `/models/:id`
 *   **Method**: `DELETE`
 *   **Response**: `204 No Content`
 
 ### Check Connection
-*   **Endpoint**: `/models/:id/check`
+- [ ] **Endpoint**: `/models/:id/check`
 *   **Method**: `POST`
 *   **Response**: `200 OK`
     ```json
@@ -534,9 +654,9 @@ Returns scores for common benchmark suites.
 
 ---
 
-## 7.12. Dataset Generator
+## 8.12. Dataset Generator
 ### Upload Source Documents
-*   **Endpoint**: `/dataset-gen/upload`
+- [ ] **Endpoint**: `/dataset-gen/upload`
 *   **Method**: `POST`
 *   **Headers**: `Content-Type: multipart/form-data`
 *   **Body**: `file` (Binary)
@@ -546,7 +666,7 @@ Returns scores for common benchmark suites.
     ```
 
 ### Generate Dataset
-*   **Endpoint**: `/dataset-gen/generate`
+- [ ] **Endpoint**: `/dataset-gen/generate`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -564,7 +684,7 @@ Returns scores for common benchmark suites.
     ```
 
 ### Generation History
-*   **Endpoint**: `/dataset-gen/history`
+- [ ] **Endpoint**: `/dataset-gen/history`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -575,9 +695,9 @@ Returns scores for common benchmark suites.
 
 ---
 
-## 7.13. Human Review
+## 8.13. Human Review
 ### Review Queue
-*   **Endpoint**: `/human-review/queue`
+- [ ] **Endpoint**: `/human-review/queue`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -593,7 +713,7 @@ Returns scores for common benchmark suites.
     ```
 
 ### Submit Rating/Correction
-*   **Endpoint**: `/human-review/submit`
+- [ ] **Endpoint**: `/human-review/submit`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -607,9 +727,9 @@ Returns scores for common benchmark suites.
 
 ---
 
-## 7.14. Contribution
+## 8.14. Contribution
 ### Commit History
-*   **Endpoint**: `/contribution/commits`
+- [ ] **Endpoint**: `/contribution/commits`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -619,7 +739,7 @@ Returns scores for common benchmark suites.
     ```
 
 ### Commit New Test Case
-*   **Endpoint**: `/contribution/commit`
+- [ ] **Endpoint**: `/contribution/commit`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -633,9 +753,9 @@ Returns scores for common benchmark suites.
 
 ---
 
-## 7.15. Metrics Library
+## 8.15. Metrics Library
 ### List Metrics
-*   **Endpoint**: `/metrics-library`
+- [ ] **Endpoint**: `/metrics-library`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -645,7 +765,7 @@ Returns scores for common benchmark suites.
     ```
 
 ### Update Metric Config
-*   **Endpoint**: `/metrics-library/:id`
+- [ ] **Endpoint**: `/metrics-library/:id`
 *   **Method**: `PATCH`
 *   **Body**:
     ```json
@@ -657,7 +777,7 @@ Returns scores for common benchmark suites.
 *   **Response**: `200 OK`
 
 ### Create Custom Metric
-*   **Endpoint**: `/metrics-library`
+- [ ] **Endpoint**: `/metrics-library`
 *   **Method**: `POST`
 *   **Body**:
     ```json

@@ -162,8 +162,128 @@ Kết quả sau khi chạy LLM eval.
 
 ---
 
+## 7. Extended Microservices REST API (Đặc tả chi tiết Frontend & API Gateway)
+
+Phần này mô tả các endpoints API thực tế được cung cấp bởi các Microservices phụ trợ (backend), có thể được truy cập thông qua Gateway.
+
+### 7.1. Identity Service
+Quản lý Định danh, Người dùng và Không gian làm việc.
+
+- [x] `POST /identity/api/v1/auth/google`: Xác thực OAuth với Google.
+- [x] `GET /identity/api/v1/workspaces/me`: Lấy profile của người dùng hiện tại.
+- [x] `GET /identity/api/v1/workspaces`: Lấy danh sách các workspace của người dùng.
+- [x] `POST /identity/api/v1/workspaces`: Tạo thông tin workspace mới.
+- [x] `GET /identity/api/v1/workspaces/{id}/members`: Hiện các thành viên trong workspace.
+- [x] `DELETE /identity/api/v1/workspaces/{workspace_id}/members/{user_id}`: Xóa thành viên khỏi nhóm.
+- [x] `POST /identity/api/v1/workspaces/{id}/invites`: Tạo lời mời tham gia workspace.
+- [x] `GET /identity/api/v1/workspaces/{id}/invites`: Danh sách các lời mời chưa được chấp nhận.
+- [x] `GET /identity/api/v1/invites/{code}`: Lấy chi tiết thông tin thiệp mời theo code.
+- [x] `POST /identity/api/v1/invites/{code}/accept`: Đồng ý lời mời tham gia.
+- [x] `DELETE /identity/api/v1/invites/{code}`: Hủy lời mời tham gia.
+
+### 7.2. Billing Service
+Quản lý Gói cước và Tổng chi phí.
+
+- [x] `GET /billing/api/v1/plans`: Lấy danh sách các gói cước có sẵn nền tảng.
+- [x] `GET /billing/api/v1/subscription`: Xem thông tin subscription hiện tại của người dùng.
+- [x] `POST /billing/api/v1/usage/increment`: Tăng mức tiêu thụ tài nguyên (số lượng kiểm thử, v.v.).
+- [x] `POST /billing/api/v1/checkout`: Khởi tạo thanh toán với cổng PayPal.
+- [x] `POST /billing/api/v1/checkout/success`: Nhận kết quả thanh toán từ cổng PayPal thành công.
+- [x] `GET /billing/api/v1/transactions`: Xem lịch sử thanh toán giao dịch.
+- [x] `POST /billing/api/v1/webhook`: Webhook server-to-server xử lý từ IPN PayPal.
+
+### 7.3. Resource Service
+Chịu trách nhiệm C.R.U.D các tài nguyên đánh giá (Agents, Scenarios, Vectors).
+
+#### Quản lý Agent & Mô hình
+- [x] `GET /resource/api/v1/agents`: Lấy danh sách các Bot mục tiêu.
+- [x] `POST /resource/api/v1/agents`: Đăng kí Bot mục tiêu.
+- [x] `GET /resource/api/v1/agents/{id}`: Xem chi tiết về Bot.
+- [x] `PUT /resource/api/v1/agents/{id}`: Sửa metadata Bot.
+- [x] `DELETE /resource/api/v1/agents/{id}`: Xóa Agent.
+- [x] `GET /resource/api/v1/models_llm`: Danh sách cung cấp cài đặt AI (OpenAI, VLLM).
+- [x] `POST /resource/api/v1/models_llm`: Thêm thiết lập LLM Provider mới.
+- [x] `PUT /resource/api/v1/models_llm/{id}`: Sửa khóa LLM Provider.
+- [x] `DELETE /resource/api/v1/models_llm/{id}`: Xóa LLM Cấu hình.
+
+#### Kịch bản & Node
+- [x] `GET /resource/api/v1/scenarios`: Lọc Scenarios (Graph-based).
+- [x] `POST /resource/api/v1/scenarios`: Tạo các Nodes và Dây (Edges).
+- [x] `GET /resource/api/v1/scenarios/{id}`: JSON chi tiết ReactFlow.
+- [x] `PUT /resource/api/v1/scenarios/{id}`: Chỉnh sửa Dây và Khối Node.
+- [x] `DELETE /resource/api/v1/scenarios/{id}`: Remove 1 bản kịch.
+- [x] `POST /resource/api/v1/scenarios/generate-ai`: Tạo ra cấu trúc Edge Node tự động từ hội thoại thô (Text prompt).
+
+#### Base Kiến thức RAG
+- [x] `GET /resource/api/v1/knowledge_bases`: Lấy tổng kho.
+- [x] `POST /resource/api/v1/knowledge_bases`: Kết nối cơ sở Vector / Database tài liệu mới.
+- [x] `PUT /resource/api/v1/knowledge_bases/{id}`: Cài đặt nâng cao KB.
+- [x] `DELETE /resource/api/v1/knowledge_bases/{id}`: Gỡ tài liệu khỏi KB.
+
+#### Tùy Biến Metrics & Traces (Kiểm duyệt)
+- [x] `GET /resource/api/v1/metrics`: Lấy Metrics đang enable.
+- [x] `POST /resource/api/v1/metrics`: Tùy biến tiêu chí mới (G-Eval).
+- [x] `PUT /resource/api/v1/metrics/{id}`: Sửa mức Threshold điểm.
+- [x] `DELETE /resource/api/v1/metrics/{id}`: Xóa dòng Metric.
+- [x] `POST /resource/api/v1/metrics/seed`: **[Hệ Thống]** Gieo rắc sẵn hệ Base Default Metrics (RAG/Toxcity).
+- [x] `GET /resource/api/v1/traces`: Gọi liên kết từ SDK LangFuse Traces Logging.
+- [x] `GET /resource/api/v1/traces/{id}`: Bắt đúng vết Trace đã trace.
+
+#### Human-in-the-Loop Đánh Giá
+- [x] `GET /resource/api/v1/reviews/manual-reviews`: Danh sách case đang treo, cờ chờ điểm Review.
+- [x] `POST /resource/api/v1/reviews`: Lưu trữ cờ cắm khi AI không chắc chắn.
+- [x] `POST /resource/api/v1/reviews/{id}/decision`: Báo cáo Score đánh bằng cơm từ Human.
+
+#### Báo cáo dữ liệu (Arena & Red Team)
+API Resource đảm nhiệm các query cho UI hiển thị từ Data của Orchestrator.
+- [x] `GET /resource/api/v1/battle/campaigns`: Xem các ván đấu đôi.
+- [x] `GET /resource/api/v1/battle/campaigns/{id}`: Ai thắng ai.
+- [x] `GET /resource/api/v1/battle/campaigns/{id}/turns`: Từng hiệp một.
+- [x] `GET /resource/api/v1/red_teaming/campaigns`: Lọc tiến độ cuộc đánh Jailbreak.
+- [x] `GET /resource/api/v1/red_teaming/campaigns/{id}`: Kết quả Tấn công Đỏ.
+- [x] `GET /resource/api/v1/red_teaming/campaigns/{id}/stats`: Tỉ lệ sập lỗ hổng bảo mật.
+- [x] `GET /resource/api/v1/red_teaming/campaigns/{id}/logs`: Chi tiết raw dump chích xuất Prompt Injection.
+- [x] `GET /resource/api/v1/benchmarks`: Các bài thi test quốc tế có sẵn (MMLU).
+- [x] `GET /resource/api/v1/benchmarks/{id}`: Xem Agent được bao nhiêu điểm bài test MMLU.
+
+#### Bảng điều khiển (Analytics)
+- [x] `GET /resource/api/v1/dashboard/summary`: Tính điểm Metrics báo cáo.
+- [x] `GET /resource/api/v1/dashboard/trends`: Timeseries qua thời gian.
+- [x] `GET /resource/api/v1/dashboard/metrics-breakdown`: Biểu đồ bánh đánh giá phần trăm.
+
+### 7.4. Orchestrator Service
+Quản lý Controller của các trạng thái chạy (LangGraph State Machines). Xử lý quá trình kích hoạt Run Logic.
+
+#### Tiêu chuẩn chiến dịch chạy
+- [x] `POST /orchestrator/api/v1/campaigns`: Trigger Run Job cơ bản.
+- [x] `GET /orchestrator/api/v1/campaigns`: Tracking Job.
+- [x] `GET /orchestrator/api/v1/campaigns/{id}`: Trạng thái cờ Queue.
+- [x] `GET /orchestrator/api/v1/campaigns/{id}/state`: Luồng tin nhắn realtime qua Event State Stream.
+
+#### Exec Tấn Công Đội Đỏ 
+- [x] `POST /orchestrator/api/v1/red-teaming`: Nã đạn chọt (Probing) liên hoàn bot target.
+- [x] `GET /orchestrator/api/v1/red-teaming/campaigns`: Theo dõi Job Red Team.
+
+#### Battle Arena Đấu Lô-gic
+- [x] `POST /orchestrator/api/v1/battle/start`: Đưa Model A và Model B lên võ đài.
+- [x] `GET /orchestrator/api/v1/battle/{id}/state`: Stream tỉ số đôi.
+
+#### Benchmark (Chấm Chuẩn Quốc Tế)
+- [x] `GET /orchestrator/api/v1/benchmarks/list`: Coi các bộ quy chuẩn Quốc tế (MMLU, GSM8K).
+- [x] `POST /orchestrator/api/v1/benchmarks/run`: Yêu cầu thi để cấp điểm.
+- [x] `GET /orchestrator/api/v1/benchmarks/history`: Lịch sử các đề đã giải.
+- [x] `GET /orchestrator/api/v1/benchmarks/history/{id}`: Lịch sử giải bài thi cụ thể.
+
+### 7.5. Gen AI Service
+Service Độc lập chuyên xử lý Logic LLM Helper (Generate Test case/Avatar..v.v).
+
+- [x] `POST /gen-ai/api/v1/generate/personas`: Làm ảo (Synthetic) một chân dung khách lạ.
+- [x] `POST /gen-ai/api/v1/generate/test-cases`: Sinh Case Test Phức tạp cho đối tượng cụ thể.
+
+---
+
 # Tài Liệu API Backend cho Web Application (Mock Specification)
-## 7. Web Application API (BFF Specification)
+## 8. Web Application API (BFF Specification)
 
 Tài liệu mô tả danh sách các API endpoints được giả lập (mock) trong hệ thống Evaluation Platform. Các Frontend Component sẽ gọi các API để hiển thị dữ liệu.
 
@@ -179,11 +299,11 @@ Base URL: `/api/v1`
 
 ---
 
-## 7.1. Navigation & System
+## 8.1. Navigation & System
 ### Lấy cấu trúc Menu
 Trả về danh sách các menu items để hiển thị trên Sidebar dựa trên quyền hạn user hiện tại.
 
-*   **Endpoint**: `/navigation`
+- [ ] **Endpoint**: `/navigation`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -200,11 +320,11 @@ Trả về danh sách các menu items để hiển thị trên Sidebar dựa tr�
 
 ---
 
-## 7.2. Dashboard
+## 8.2. Dashboard
 ### Lấy chỉ số sức khỏe hệ thống
 Trả về các metric tổng quan như uptime, số lượng request, tỉ lệ lỗi.
 
-*   **Endpoint**: `/dashboard/health`
+- [ ] **Endpoint**: `/dashboard/health`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -219,7 +339,7 @@ Trả về các metric tổng quan như uptime, số lượng request, tỉ lệ
 ### Lấy trạng thái Release
 Trả về tiến độ của đợt release hiện tại.
 
-*   **Endpoint**: `/dashboard/status`
+- [ ] **Endpoint**: `/dashboard/status`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -233,9 +353,9 @@ Trả về tiến độ của đợt release hiện tại.
 
 ---
 
-## 7.3. Agent Management
+## 8.3. Agent Management
 ### Lấy danh sách Agent
-*   **Endpoint**: `/agents`
+- [ ] **Endpoint**: `/agents`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -246,7 +366,7 @@ Trả về tiến độ của đợt release hiện tại.
     ```
 
 ### Tạo Agent mới
-*   **Endpoint**: `/agents`
+- [ ] **Endpoint**: `/agents`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -262,7 +382,7 @@ Trả về tiến độ của đợt release hiện tại.
     ```
 
 ### Cập nhật Agent
-*   **Endpoint**: `/agents/:id`
+- [ ] **Endpoint**: `/agents/:id`
 *   **Method**: `PUT`
 *   **Body**:
     ```json
@@ -274,15 +394,15 @@ Trả về tiến độ của đợt release hiện tại.
 *   **Response**: `200 OK`
 
 ### Xóa Agent
-*   **Endpoint**: `/agents/:id`
+- [ ] **Endpoint**: `/agents/:id`
 *   **Method**: `DELETE`
 *   **Response**: `204 No Content`
 
 ---
 
-## 7.4. Scenario Builder (Kịch bản kiểm thử)
+## 8.4. Scenario Builder (Kịch bản kiểm thử)
 ### Lấy danh sách kịch bản
-*   **Endpoint**: `/scenarios`
+- [ ] **Endpoint**: `/scenarios`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -292,7 +412,7 @@ Trả về tiến độ của đợt release hiện tại.
     ```
 
 ### Lấy chi tiết kịch bản
-*   **Endpoint**: `/scenarios/:id`
+- [ ] **Endpoint**: `/scenarios/:id`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -304,7 +424,7 @@ Trả về tiến độ của đợt release hiện tại.
     ```
 
 ### Tạo/Lưu kịch bản
-*   **Endpoint**: `/scenarios`
+- [ ] **Endpoint**: `/scenarios`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -317,15 +437,15 @@ Trả về tiến độ của đợt release hiện tại.
 *   **Response**: `201 Created`
 
 ### Xóa kịch bản
-*   **Endpoint**: `/scenarios/:id`
+- [ ] **Endpoint**: `/scenarios/:id`
 *   **Method**: `DELETE`
 *   **Response**: `204 No Content`
 
 ---
 
-## 7.5. Knowledge Base Management
+## 8.5. Knowledge Base Management
 ### Lấy danh sách KB
-*   **Endpoint**: `/knowledge-bases`
+- [ ] **Endpoint**: `/knowledge-bases`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -335,7 +455,7 @@ Trả về tiến độ của đợt release hiện tại.
     ```
 
 ### Kết nối KB mới
-*   **Endpoint**: `/knowledge-bases`
+- [ ] **Endpoint**: `/knowledge-bases`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -349,7 +469,7 @@ Trả về tiến độ của đợt release hiện tại.
 
 ### Trigger Sync
 Kích hoạt đồng bộ lại dữ liệu.
-*   **Endpoint**: `/knowledge-bases/:id/sync`
+- [ ] **Endpoint**: `/knowledge-bases/:id/sync`
 *   **Method**: `POST`
 *   **Response**: `200 OK` (Async response)
     ```json
@@ -357,15 +477,15 @@ Kích hoạt đồng bộ lại dữ liệu.
     ```
 
 ### Xóa KB
-*   **Endpoint**: `/knowledge-bases/:id`
+- [ ] **Endpoint**: `/knowledge-bases/:id`
 *   **Method**: `DELETE`
 *   **Response**: `204 No Content`
 
 ---
 
-## 7.6. Team & Users
+## 8.6. Team & Users
 ### Lấy danh sách thành viên
-*   **Endpoint**: `/team`
+- [ ] **Endpoint**: `/team`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -375,27 +495,27 @@ Kích hoạt đồng bộ lại dữ liệu.
     ```
 
 ### Mời thành viên
-*   **Endpoint**: `/team/invite`
+- [ ] **Endpoint**: `/team/invite`
 *   **Method**: `POST`
 *   **Body**: `{ "email": "new@example.com", "role": "EDITOR" }`
 *   **Response**: `200 OK`
 
 ### Cập nhật quyền
-*   **Endpoint**: `/team/:id/role`
+- [ ] **Endpoint**: `/team/:id/role`
 *   **Method**: `PATCH`
 *   **Body**: `{ "role": "VIEWER" }`
 *   **Response**: `200 OK`
 
 ### Xóa thành viên
-*   **Endpoint**: `/team/:id`
+- [ ] **Endpoint**: `/team/:id`
 *   **Method**: `DELETE`
 *   **Response**: `204 No Content`
 
 ---
 
-## 7.7. Dev Console (CI/CD)
+## 8.7. Dev Console (CI/CD)
 ### Lấy Logs Pipeline
-*   **Endpoint**: `/dev-console/logs`
+- [ ] **Endpoint**: `/dev-console/logs`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -405,7 +525,7 @@ Kích hoạt đồng bộ lại dữ liệu.
     ```
 
 ### Lấy chi tiết lỗi
-*   **Endpoint**: `/dev-console/failure-detail`
+- [ ] **Endpoint**: `/dev-console/failure-detail`
 *   **Method**: `GET`
 *   **Query Params**: `?log_id=...`
 *   **Response**: `200 OK`
@@ -415,9 +535,9 @@ Kích hoạt đồng bộ lại dữ liệu.
 
 ---
 
-## 7.8. Red Teaming (Security)
+## 8.8. Red Teaming (Security)
 ### Lấy Logs tấn công
-*   **Endpoint**: `/red-teaming/logs`
+- [ ] **Endpoint**: `/red-teaming/logs`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -427,7 +547,7 @@ Kích hoạt đồng bộ lại dữ liệu.
     ```
 
 ### Lấy báo cáo thống kê
-*   **Endpoint**: `/red-teaming/stats`
+- [ ] **Endpoint**: `/red-teaming/stats`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -435,17 +555,17 @@ Kích hoạt đồng bộ lại dữ liệu.
     ```
 
 ### Bắt đầu tấn công thử nghiệm
-*   **Endpoint**: `/red-teaming/start`
+- [ ] **Endpoint**: `/red-teaming/start`
 *   **Method**: `POST`
 *   **Body**: `{ "strategy": "jailbreak", "intensity": 80 }`
 *   **Response**: `200 OK`
 
 ---
 
-## 7.9. Benchmarks
+## 8.9. Benchmarks
 ### Lấy điểm chuẩn
 Trả về danh sách điểm số của các bộ benchmark phổ biến.
-*   **Endpoint**: `/benchmarks`
+- [ ] **Endpoint**: `/benchmarks`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -458,7 +578,7 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
     ```
 
 ### Chạy Benchmark
-*   **Endpoint**: `/benchmarks/run`
+- [ ] **Endpoint**: `/benchmarks/run`
 *   **Method**: `POST`
 *   **Body**: `{ "suites": ["mmlu", "gsm8k"] }`
 *   **Response**: `200 OK`
@@ -468,9 +588,9 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
 
 ---
 
-## 7.10. Battle Arena
+## 8.10. Battle Arena
 ### Lấy dịch sử chat
-*   **Endpoint**: `/battle-arena/history`
+- [ ] **Endpoint**: `/battle-arena/history`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -482,7 +602,7 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
     ```
 
 ### Gửi tin nhắn (So sánh Models)
-*   **Endpoint**: `/battle-arena/send`
+- [ ] **Endpoint**: `/battle-arena/send`
 *   **Method**: `POST`
 *   **Body**: `{ "content": "Viết bài thơ về mùa thu" }`
 *   **Response**: `200 OK`
@@ -495,9 +615,9 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
 
 ---
 
-## 7.11. Model Registry
+## 8.11. Model Registry
 ### Lấy danh sách Model
-*   **Endpoint**: `/models`
+- [ ] **Endpoint**: `/models`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -507,7 +627,7 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
     ```
 
 ### Thêm Model mới
-*   **Endpoint**: `/models`
+- [ ] **Endpoint**: `/models`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -522,12 +642,12 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
 *   **Response**: `201 Created`
 
 ### Xóa Model
-*   **Endpoint**: `/models/:id`
+- [ ] **Endpoint**: `/models/:id`
 *   **Method**: `DELETE`
 *   **Response**: `204 No Content`
 
 ### Kiểm tra kết nối
-*   **Endpoint**: `/models/:id/check`
+- [ ] **Endpoint**: `/models/:id/check`
 *   **Method**: `POST`
 *   **Response**: `200 OK`
     ```json
@@ -536,9 +656,9 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
 
 ---
 
-## 7.12. Dataset Generator
+## 8.12. Dataset Generator
 ### Tải lên tài liệu nguồn
-*   **Endpoint**: `/dataset-gen/upload`
+- [ ] **Endpoint**: `/dataset-gen/upload`
 *   **Method**: `POST`
 *   **Headers**: `Content-Type: multipart/form-data`
 *   **Body**: `file` (Binary)
@@ -548,7 +668,7 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
     ```
 
 ### Sinh dữ liệu tự động
-*   **Endpoint**: `/dataset-gen/generate`
+- [ ] **Endpoint**: `/dataset-gen/generate`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -566,7 +686,7 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
     ```
 
 ### Lấy lịch sử sinh
-*   **Endpoint**: `/dataset-gen/history`
+- [ ] **Endpoint**: `/dataset-gen/history`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -577,9 +697,9 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
 
 ---
 
-## 7.13. Human Review
+## 8.13. Human Review
 ### Lấy hàng đợi đánh giá
-*   **Endpoint**: `/human-review/queue`
+- [ ] **Endpoint**: `/human-review/queue`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -595,7 +715,7 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
     ```
 
 ### Gửi đánh giá
-*   **Endpoint**: `/human-review/submit`
+- [ ] **Endpoint**: `/human-review/submit`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -609,9 +729,9 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
 
 ---
 
-## 7.14. Contribution
+## 8.14. Contribution
 ### Lấy lịch sử commit
-*   **Endpoint**: `/contribution/commits`
+- [ ] **Endpoint**: `/contribution/commits`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -621,7 +741,7 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
     ```
 
 ### Commit test case mới
-*   **Endpoint**: `/contribution/commit`
+- [ ] **Endpoint**: `/contribution/commit`
 *   **Method**: `POST`
 *   **Body**:
     ```json
@@ -635,9 +755,9 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
 
 ---
 
-## 7.15. Metrics Library
+## 8.15. Metrics Library
 ### Lấy danh sách Metrics
-*   **Endpoint**: `/metrics-library`
+- [ ] **Endpoint**: `/metrics-library`
 *   **Method**: `GET`
 *   **Response**: `200 OK`
     ```json
@@ -647,7 +767,7 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
     ```
 
 ### Cập nhật cấu hình Metric
-*   **Endpoint**: `/metrics-library/:id`
+- [ ] **Endpoint**: `/metrics-library/:id`
 *   **Method**: `PATCH`
 *   **Body**:
     ```json
@@ -659,7 +779,7 @@ Trả về danh sách điểm số của các bộ benchmark phổ biến.
 *   **Response**: `200 OK`
 
 ### Tạo Custom Metric mới
-*   **Endpoint**: `/metrics-library`
+- [ ] **Endpoint**: `/metrics-library`
 *   **Method**: `POST`
 *   **Body**:
     ```json
